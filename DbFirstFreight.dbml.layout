@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 36, 47.125" name="DbFirstFreight">
+  <DataContextMoniker Name="/DbFirstFreightDataContext" />
+  <nestedChildShapes>
+    <classShape Id="a1b3a08f-b9eb-43c5-a57c-955b8c85640a" absoluteBounds="9.75, 0.75, 2, 14.655092773437499">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/CalendarEvent" />
+      <nestedChildShapes>
+        <elementListCompartment Id="440d3fdd-56ec-4c03-9056-5e1e821e6afa" absoluteBounds="9.765, 1.21, 1.9700000000000002, 14.0950927734375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="81d380dc-894a-44ef-b038-448896b0028f" absoluteBounds="12.75, 0.75, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/WonReason" />
+      <nestedChildShapes>
+        <elementListCompartment Id="152f9754-e9f3-4273-9b77-35a42abb9f1b" absoluteBounds="12.765, 1.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6331c71d-0f1b-4c01-aa20-8d735b108276" absoluteBounds="12.75, 5.75, 2, 4.8477197265624987">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/CalendarInvite" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bc7203b7-6938-4347-bf2c-fe9722b2f5c5" absoluteBounds="12.765, 6.21, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="75610132-16e1-4b88-9b56-a2e28bd36c7f" absoluteBounds="12.75, 11.75, 2, 3.5016097005208309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Commodity" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f7ab0b8b-24a9-4840-9489-f161f36baa65" absoluteBounds="12.765, 12.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="89b1f7aa-7d3f-4762-bc32-64c7dba6621c" absoluteBounds="15.75, 0.75, 2, 17.924217122395834">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Company" />
+      <nestedChildShapes>
+        <elementListCompartment Id="800170ea-bf7c-4e7f-ae5a-387cf17d9ca8" absoluteBounds="15.765, 1.21, 1.9700000000000002, 17.364217122395832" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f97a363a-7260-42a2-88c4-b2190ac585e8" absoluteBounds="0.75, 0.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/CompanyLinkType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="46a9ce87-9488-40d4-b69e-ed5ef43b86d9" absoluteBounds="0.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3f20e140-6852-4775-8ee1-f8bb1dd6607e" absoluteBounds="3.75, 14.75, 2, 3.6939111328125005">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/CompanySegment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="20757763-68d6-4064-a086-d90d58df7cbf" absoluteBounds="3.765, 15.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="66a9c46c-5b83-4376-b72b-217a33165fff" absoluteBounds="6.75, 16.75, 2, 3.3093082682291666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/CompanyType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="438db98f-afc9-41e0-adde-46cc05f1eac7" absoluteBounds="6.765, 17.21, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dea9d50a-0d3f-462f-8957-bcf91fabb517" absoluteBounds="9.75, 16.75, 2, 3.5016097005208309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Competitor" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d9b6aaf6-df3b-4949-8542-2a0fa69e81ea" absoluteBounds="9.765, 17.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8bcd4c4b-b2b6-4227-baa4-488e8bc1d165" absoluteBounds="18.75, 0.75, 2, 14.462791341145831">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Contact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bdd83c48-fc01-4992-8f0c-b53541c33b6a" absoluteBounds="18.765, 1.21, 1.9700000000000002, 13.902791341145832" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0fa6f2d8-e9cc-4a40-bde8-314cfc3e5033" absoluteBounds="18.75, 16.75, 2, 3.5016097005208309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/ContactType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f2dd8227-ac5b-4606-a0d3-8507dec2315c" absoluteBounds="18.765, 17.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e44c9c41-f74a-4ceb-9073-125990bc6ea1" absoluteBounds="3.5, 4.625, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/DealInvite" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4cba2b95-4ebe-4061-b2ab-8fde91f50eaf" absoluteBounds="3.515, 5.085, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cbc22b9d-2d54-4baf-b532-e055758a3170" absoluteBounds="0.75, 19.75, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/DealNotification" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ad0e8569-d771-4435-bfb9-82c7b0aca41e" absoluteBounds="0.765, 20.21, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="798ef677-be6e-4540-9848-cad20628aad8" absoluteBounds="12.75, 19.75, 2, 22.347150065104167">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Deal" />
+      <nestedChildShapes>
+        <elementListCompartment Id="895bfb21-9f7c-4d29-a749-76295abac3da" absoluteBounds="12.765, 20.21, 1.9700000000000002, 21.787150065104164" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="86d40371-fa59-4103-9e48-5e7b7b20e75d" absoluteBounds="3.75, 0.75, 2, 2.9247054036458326">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/DealSalesStageHistory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ecb26ea0-0d64-47a6-a1f3-fcd37e561cb7" absoluteBounds="3.765, 1.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="58492b89-21b3-4634-8d7f-4f044736dea5" absoluteBounds="21.75, 0.75, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/DealType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="54f4eec8-d730-45e9-893c-8a0c09370f31" absoluteBounds="21.765, 1.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d731dc25-5b31-438e-86b0-b8778cda3143" absoluteBounds="3.5, 9.25, 2, 4.4631168619791666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/District" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a35dd260-71f0-4074-877b-831f9d9a6a42" absoluteBounds="3.515, 9.71, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5582e706-3523-4e2e-b79b-734298eb27d0" absoluteBounds="21.75, 5.75, 2, 6.0015283203124987">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Document" />
+      <nestedChildShapes>
+        <elementListCompartment Id="241eeb89-0195-4415-b9c3-bc8db2beb4ee" absoluteBounds="21.765, 6.21, 1.9700000000000002, 5.4415283203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3a58f093-cb6d-4c79-9a02-555dbbfe1335" absoluteBounds="3.75, 21.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/DocumentType" />
+      <nestedChildShapes>
+        <elementListCompartment Id="85ba68ad-7560-4509-9fe8-0eeb5d3b1bf3" absoluteBounds="3.765, 22.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="113b7a2f-5089-4222-ba41-e941e89bcf77" absoluteBounds="6.75, 21.75, 2, 2.5401025390625023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/EmailAddress" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f1973300-4f9c-4a53-bd0e-a65243bdf23e" absoluteBounds="6.765, 22.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9c7efa0f-e9be-41fc-86f8-480f4f70d2dc" absoluteBounds="21.75, 12.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/EmailAttachment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="022c88c5-a376-4bbb-87f9-b444162a1b3d" absoluteBounds="21.765, 13.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="715def70-581b-457b-b76c-0a4750a75425" absoluteBounds="15.75, 21.75, 2, 5.4246240234375023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/EmailTemplate" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4ec27cf7-59a0-48b4-9362-6d84dab09b13" absoluteBounds="15.765, 22.21, 1.9700000000000002, 4.8646240234375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1ca5ba9d-087d-48ef-9c5b-85398cce95ad" absoluteBounds="21.75, 16.75, 2, 3.6939111328125023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/EventCategory" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4c26231b-13d3-44db-9e09-bd7d787ec06f" absoluteBounds="21.765, 17.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8f59ce10-7894-4225-82aa-64df143577e9" absoluteBounds="18.75, 21.75, 2, 3.1170068359375023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/EventCompany" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a0720951-11e7-4997-b32f-108624854376" absoluteBounds="18.765, 22.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9a693183-e289-49ee-b4d1-1395676fd220" absoluteBounds="21.75, 21.75, 2, 3.5016097005208309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/EventContact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2d7adbdc-c615-4092-bd0a-b5bc9dc4a72e" absoluteBounds="21.765, 22.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e1e995f5-5923-4387-900a-576ab7650cfe" absoluteBounds="24.75, 0.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/ExchangeSyncErrorLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9708ae67-1e2f-48bd-a50b-6402570d9317" absoluteBounds="24.765, 1.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1eba10ca-0f11-42cf-9f8e-9a1874fefee0" absoluteBounds="0.75, 24.75, 2, 2.5401025390625023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/ExchangeSyncLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4d356c23-b5ba-4249-8ca3-93365cc25a17" absoluteBounds="0.765, 25.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ed7d83eb-d6f1-4d15-af01-644c484ac4ed" absoluteBounds="24.75, 4.75, 2, 3.5016097005208318">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Industry" />
+      <nestedChildShapes>
+        <elementListCompartment Id="991fb20a-30c4-42d6-a5be-305dcd9aa060" absoluteBounds="24.765, 5.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="46308584-ed13-4660-8b49-11d4d2f2402e" absoluteBounds="24.75, 9.75, 2, 13.693585611979167">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Lane" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6a2848a1-cb25-446d-a165-e2c526c3f83c" absoluteBounds="24.765, 10.21, 1.9700000000000002, 13.133585611979166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="5e63be9d-1b78-4380-a750-5c994a78162e" absoluteBounds="24.75, 24.75, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LinkCalendarEventToUser" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b5890578-f91e-479f-99ad-4fcefa7416bc" absoluteBounds="24.765, 25.21, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="deb111ed-f444-443f-b7a9-0ba7973fb46c" absoluteBounds="6.75, 25.75, 2, 4.8477197265625023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LinkCompanyToCompany" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e31b09e8-dd1e-49ba-925d-9bd2a71c913f" absoluteBounds="6.765, 26.21, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b95a7102-f2f1-4e34-8ffd-2be13c759b5d" absoluteBounds="18.75, 26.75, 2, 4.2708154296875023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LinkContactToCompany" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2a3d6a07-7554-4bb7-9515-deb13e77d165" absoluteBounds="18.765, 27.21, 1.9700000000000002, 3.7108154296875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9537089d-804a-4749-9024-b82fbd8869fa" absoluteBounds="27.75, 0.75, 2, 3.6939111328124992">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LinkContactToContact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a7d2701e-fd14-4e89-8ebd-5aa2fc019299" absoluteBounds="27.765, 1.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="edad7ecb-a6b5-4059-b7df-2971256a1bca" absoluteBounds="27.75, 5.75, 2, 4.0785139973958318">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LinkContactToDeal" />
+      <nestedChildShapes>
+        <elementListCompartment Id="80af9809-f77b-4614-a452-52f1521881ab" absoluteBounds="27.765, 6.21, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fac2042f-76a5-4e5e-b3df-4781495de38b" absoluteBounds="27.75, 10.75, 2, 4.8477197265624987">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LinkUserToCompany" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b66321aa-51ef-46de-bd36-e0f824783437" absoluteBounds="27.765, 11.21, 1.9700000000000002, 4.2877197265625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ae116df7-1f54-41c7-a570-5418df1ba95b" absoluteBounds="27.75, 16.75, 2, 5.0400211588541666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LinkUserToContact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a5558919-0f7e-479b-b54b-ffff33a3788e" absoluteBounds="27.765, 17.21, 1.9700000000000002, 4.4800211588541661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a24664d6-1485-4cc1-ae89-90789786d01d" absoluteBounds="27.75, 22.75, 2, 5.2323225911458309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LinkUserToDeal" />
+      <nestedChildShapes>
+        <elementListCompartment Id="33e014e7-7e16-4051-880a-f0215c439a2b" absoluteBounds="27.765, 23.21, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d2532441-47bf-4ce7-b081-58d51ec74bb8" absoluteBounds="27.75, 28.75, 2, 4.0785139973958309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LinkUserToManager" />
+      <nestedChildShapes>
+        <elementListCompartment Id="99e416a9-17e2-4165-ad75-e4d2eee5df8b" absoluteBounds="27.765, 29.21, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d0b2362a-38a5-4d50-81bb-b25960a1a9ae" absoluteBounds="21.75, 29.75, 2, 8.3091455078125023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Location" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eac175f0-3083-4781-b6b1-bea07793aa8f" absoluteBounds="21.765, 30.21, 1.9700000000000002, 7.7491455078125009" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="42e878da-243d-479d-a209-12b359d77a0a" absoluteBounds="30.75, 0.75, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/LostReason" />
+      <nestedChildShapes>
+        <elementListCompartment Id="91515f29-b687-48aa-b55f-56d84ae234b9" absoluteBounds="30.765, 1.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1254f147-4c98-485c-8743-507f50526dea" absoluteBounds="30.75, 5.75, 2, 6.7707340494791666">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Note" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d7ea26d3-2323-48f7-ab5f-f9ae87c347cc" absoluteBounds="30.765, 6.21, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3d3b6e1d-8582-4496-84f3-79ea38289559" absoluteBounds="30.75, 13.75, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/QuotePackage" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8bc783cd-8386-4718-b416-b60322a8b7e4" absoluteBounds="30.765, 14.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7056f611-28f5-4341-8d20-c31024aea680" absoluteBounds="30.75, 17.75, 2, 13.693585611979167">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Quote" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b025b3d5-0a5c-4fa6-ab5d-b7565c4bc928" absoluteBounds="30.765, 18.21, 1.9700000000000002, 13.133585611979166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9b743ac2-8f66-421c-a82f-09da4a9c5fff" absoluteBounds="6.75, 31.75, 2, 3.6939111328125023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/QuoteStatus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="82f2f24e-d6ca-4f2e-b363-55e91cebaedb" absoluteBounds="6.765, 32.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="33c85178-b8b4-4710-a8ff-72570b50e370" absoluteBounds="15.75, 32.75, 2, 3.6939111328125023">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Region" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1558a15c-e811-4afe-8041-c49aba173a3d" absoluteBounds="15.765, 33.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="319cc76b-e87b-41e5-85bd-78033aeab779" absoluteBounds="6.5, 6.5, 2, 5.2323225911458318">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/SalesManager" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a8ce7de2-1577-4fc7-a468-5ad446a5b2bf" absoluteBounds="6.515, 6.96, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b2eed23f-94ef-4e8b-a58e-b6dfb3963b53" absoluteBounds="30.75, 32.75, 2, 4.0785139973958309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/SalesStage" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cec738b0-e7ed-4050-bb4a-7269a9ecdd14" absoluteBounds="30.765, 33.21, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="28cbb8aa-c1f6-407d-8b3c-565d57c1d606" absoluteBounds="33.75, 0.75, 2, 3.5016097005208326">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Source" />
+      <nestedChildShapes>
+        <elementListCompartment Id="152ec47b-3c4e-4869-a1be-db596996e03c" absoluteBounds="33.765, 1.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f58a4a99-8d63-4c25-a09f-7d0728dc0de8" absoluteBounds="0.75, 3.875, 2, 10.424461263020831">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Subscriber" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e437770f-ac90-44e0-af34-af359c6ddd74" absoluteBounds="0.765, 4.335, 1.9700000000000002, 9.8644612630208321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7fd6cd1a-7759-4299-bb37-d00ffc15ec7a" absoluteBounds="33.75, 5.75, 2, 3.6939111328124987">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Tag" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f5c7d392-891a-48b6-a261-4719703dd6d7" absoluteBounds="33.765, 6.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="507a415f-a448-4ca0-95c1-6d8b0cac52f8" absoluteBounds="33.75, 10.75, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/TaskCompany" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fcd70560-c753-4f67-abc3-ca95bdaed379" absoluteBounds="33.765, 11.21, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b45cf85b-54ab-461b-9106-d73f167fa535" absoluteBounds="33.75, 14.75, 2, 3.5016097005208309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/TaskContact" />
+      <nestedChildShapes>
+        <elementListCompartment Id="cad1f773-f28a-4f32-9dfe-42f9c2cf815d" absoluteBounds="33.765, 15.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="97f0e3f4-d822-4219-b63d-a37a7a027338" absoluteBounds="33.75, 19.75, 2, 9.27065266927083">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/Task" />
+      <nestedChildShapes>
+        <elementListCompartment Id="aabffdb9-ee40-4735-a8e8-94656fdf298c" absoluteBounds="33.765, 20.21, 1.9700000000000002, 8.7106526692708321" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a41b2732-9679-4f15-801e-43c117549814" absoluteBounds="24.75, 33.75, 2, 2.7324039713541595">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/UserActivationsDeactivation" />
+      <nestedChildShapes>
+        <elementListCompartment Id="848a41cc-18ae-4f64-84e6-42529d5a7c42" absoluteBounds="24.765, 34.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b245c22a-5fd9-4557-9538-73fc265c6fa1" absoluteBounds="33.75, 30.75, 2, 5.2323225911458309">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/UserActivity" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a4fd6d7e-eced-450f-91fc-eb954dc5834f" absoluteBounds="33.765, 31.21, 1.9700000000000002, 4.672322591145833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b7245afb-642b-4cc4-8be9-f31ea3919feb" absoluteBounds="3.75, 28.375, 2, 18.501121419270831">
+      <DataClassMoniker Name="/DbFirstFreightDataContext/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="74030e28-5e09-4d52-8896-ae4eaf606de1" absoluteBounds="3.765, 28.835, 1.9700000000000002, 17.941121419270832" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.75 : 6.56810628255208); (3.5 : 6.56810628255208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DbFirstFreightDataContext/Subscriber/Subscriber_DealInvite" />
+      <nodes>
+        <classShapeMoniker Id="f58a4a99-8d63-4c25-a09f-7d0728dc0de8" />
+        <classShapeMoniker Id="e44c9c41-f74a-4ceb-9073-125990bc6ea1" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 11.4815584309896); (3.5 : 11.4815584309896)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DbFirstFreightDataContext/Subscriber/Subscriber_District" />
+      <nodes>
+        <classShapeMoniker Id="f58a4a99-8d63-4c25-a09f-7d0728dc0de8" />
+        <classShapeMoniker Id="d731dc25-5b31-438e-86b0-b8778cda3143" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 8.88060628255208); (6.5 : 8.88060628255208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DbFirstFreightDataContext/Subscriber/Subscriber_SalesManager" />
+      <nodes>
+        <classShapeMoniker Id="f58a4a99-8d63-4c25-a09f-7d0728dc0de8" />
+        <classShapeMoniker Id="319cc76b-e87b-41e5-85bd-78033aeab779" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.75 : 41.1912662760417); (6.59375 : 41.1912662760417); (6.59375 : 11.7323225911458)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/DbFirstFreightDataContext/User/User_SalesManager" />
+      <nodes>
+        <classShapeMoniker Id="b7245afb-642b-4cc4-8be9-f31ea3919feb" />
+        <classShapeMoniker Id="319cc76b-e87b-41e5-85bd-78033aeab779" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
