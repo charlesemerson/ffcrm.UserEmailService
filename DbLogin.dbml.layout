@@ -2,28 +2,28 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 13.125" name="DbLogin">
   <DataContextMoniker Name="/DbLoginDataContext" />
   <nestedChildShapes>
-    <classShape Id="2a3cf723-5c68-417e-b618-b09c29911e80" absoluteBounds="0.75, 0.75, 2, 2.7324039713541666">
+    <classShape Id="2a3cf723-5c68-417e-b618-b09c29911e80" absoluteBounds="0.5, 0.5, 2, 2.7324039713541666">
       <DataClassMoniker Name="/DbLoginDataContext/ForgotPasswordRequest" />
       <nestedChildShapes>
-        <elementListCompartment Id="ca216e87-293d-40e4-a226-a76a1dab9b60" absoluteBounds="0.765, 1.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ca216e87-293d-40e4-a226-a76a1dab9b60" absoluteBounds="0.515, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="941206bb-5da7-4aa6-9a43-0f2516f23176" absoluteBounds="3.75, 0.75, 2, 12.155174153645833">
-      <DataClassMoniker Name="/DbLoginDataContext/GlobalUser" />
-      <nestedChildShapes>
-        <elementListCompartment Id="c0fda7c0-09e5-43db-a6a9-57736e16c6cd" absoluteBounds="3.765, 1.21, 1.9700000000000002, 11.595174153645832" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="5f639756-f8d3-46b9-9e89-1a7aea6e7ce0" absoluteBounds="6.75, 0.75, 2, 4.0785139973958326">
+    <classShape Id="5f639756-f8d3-46b9-9e89-1a7aea6e7ce0" absoluteBounds="5.25, 0.5, 2, 4.0785139973958326">
       <DataClassMoniker Name="/DbLoginDataContext/FreeTrialRequest" />
       <nestedChildShapes>
-        <elementListCompartment Id="b240aa30-e2c2-47ff-8920-dc7533bc2dff" absoluteBounds="6.765, 1.21, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="b240aa30-e2c2-47ff-8920-dc7533bc2dff" absoluteBounds="5.265, 0.96, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="b717f6d7-813e-405b-aef5-673e5ca8a645" absoluteBounds="6.75, 5.75, 2, 3.3093082682291666">
+    <classShape Id="b717f6d7-813e-405b-aef5-673e5ca8a645" absoluteBounds="7.625, 0.5, 2, 3.3093082682291666">
       <DataClassMoniker Name="/DbLoginDataContext/GlobalSubscriber" />
       <nestedChildShapes>
-        <elementListCompartment Id="79da2bd1-13a0-49c3-90be-3e6663edbca9" absoluteBounds="6.765, 6.21, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="79da2bd1-13a0-49c3-90be-3e6663edbca9" absoluteBounds="7.64, 0.96, 1.9700000000000002, 2.7493082682291665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f99bedab-4e95-47e1-899a-2f83ced81c66" absoluteBounds="2.875, 0.5, 2, 12.3474755859375">
+      <DataClassMoniker Name="/DbLoginDataContext/GlobalUser" />
+      <nestedChildShapes>
+        <elementListCompartment Id="43b7ecc5-ccac-4ce9-be97-e7f2627fae82" absoluteBounds="2.8899999999999997, 0.96, 1.9700000000000002, 11.7874755859375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

@@ -14,69 +14,6 @@
       <Column Name="IpAddress" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.GlobalUsers" Member="GlobalUsers">
-    <Type Name="GlobalUser">
-      <Column Name="GlobalUserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="SubscriberId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Address" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="AdminUser" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="BillingCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="BrowserName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="BrowserVersion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="CountryName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CreatedUserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="CurrencyCode" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
-      <Column Name="CurrencySymbol" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
-      <Column Name="DataCenter" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="DateFormat" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
-      <Column Name="DateFormatReports" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
-      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="DisplayLanguage" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="EmailAddress" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
-      <Column Name="FullName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="IpAddress" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="LanguageCode" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
-      <Column Name="LanguageName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="LanguagesSpoken" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
-      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="LastUpdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="LocationCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="LocationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="LocationName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="MobilePhone" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="Phone" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="PhoneExtension" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
-      <Column Name="Phone2" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
-      <Column Name="ProfilePicture" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="PostalCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="RegionCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Column Name="RegionName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="ScreenResolution" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="SignatureImage" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="SignatureText" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
-      <Column Name="StateProvince" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="TimeZone" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="TimeZoneCityNames" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="TimeZoneExchange" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="TimeZoneOffset" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="UpdateUserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="UserActivationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="UserDeactivationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="UserRoles" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="LoginEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="Deleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="DeletedUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DeletedGlobalUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="DeletedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="UserGuid" Type="System.String" DbType="VarChar(36)" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.FreeTrialRequests" Member="FreeTrialRequests">
     <Type Name="FreeTrialRequest">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -113,6 +50,70 @@
       <Column Name="CompanyCodeText" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="CompanyParentCodeText" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="SubscriberGuid" Type="System.String" DbType="VarChar(36)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GlobalUsers" Member="GlobalUsers">
+    <Type Name="GlobalUser">
+      <Column Name="GlobalUserId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SubscriberId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="AdminUser" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="BillingCode" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BrowserName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="BrowserVersion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CountryName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedUserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CurrencyCode" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="CurrencySymbol" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="DataCenter" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DateFormat" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="DateFormatReports" Type="System.String" DbType="NVarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="Deleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DeletedUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DeletedGlobalUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DeletedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Department" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DisplayLanguage" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailAddress" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailDigest" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="FullName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="IpAddress" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LanguageCode" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="LanguageName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LanguagesSpoken" Type="System.String" DbType="NVarChar(150)" CanBeNull="true" />
+      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LastUpdate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LocationCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="LocationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LocationName" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="LoginEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="MobilePhone" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="PhoneExtension" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Phone2" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="ProfilePicture" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PostalCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="RegionCode" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="RegionName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ScreenResolution" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SignatureImage" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SignatureText" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="StateProvince" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TimeZone" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="TimeZoneCityNames" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="TimeZoneExchange" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="TimeZoneOffset" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UpdateUserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UserActivationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserDeactivationDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="UserRoles" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserGuid" Type="System.String" DbType="VarChar(36)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
