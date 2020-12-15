@@ -63,6 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbShared.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Emailer.cs" />
     <Compile Include="Helper\Currencies.cs" />
     <Compile Include="Helper\CurrencyExchange.cs" />
     <Compile Include="Helper\EmailTemplates.cs" />

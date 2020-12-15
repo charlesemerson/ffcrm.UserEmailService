@@ -9,41 +9,7 @@ namespace ffcrm.UserEmailService
     {
         static void Main(string[] args)
         {
-            var activityStartTime = DateTime.Now;
-            Console.WriteLine("Start Time: " + activityStartTime);
-            var returnMessage = "Start Time: " + activityStartTime + " </ br> ";
-            // log file
-            string logFilePath = @"C:\Logs\UserEmailService_" + DateTime.Now.ToString("dd-MMM-yyyy-hhmm") + "." + "txt";
-            // run service
-            var response = InitService(logFilePath);
-            // log summary message
-            var elapsedTime = DateTime.Now - activityStartTime;
-            var logMessage = "Start Time: " + activityStartTime + " | End Time: " + DateTime.Now + " | Elapsed Time: " + elapsedTime + Environment.NewLine;
-            new Utils().WriteToLog(logFilePath, logMessage);
-            returnMessage += " End Time: " + DateTime.Now + " </ br> ";
-            returnMessage += " Elapsed Time: " + elapsedTime + " </ br> ";
-            returnMessage += response;
-            Console.WriteLine("End Time: " + DateTime.Now);
-            // Email log file
-            SendEmail(returnMessage, logFilePath);
-        }
 
-
-        private static string InitService(string logFilePath)
-        {
-            var returnMessage = "";
-            string connection;
-            string dataCenter;
-
-            // DEV
-            connection = "Data Source=ffcrm-test.database.windows.net;Initial Catalog=CRM_Test;Persist Security Info=True;User ID=ffcrmTest;Password=Test#9605";
-            returnMessage += "DEV";
-            dataCenter = "DEV";
-
-
-            //*** YOUR CODE STARTS HERE  - CREATE SEPARATE CLASSES/ FUNCTIONS ETC APPROPRIATELY ****//
-
-            return returnMessage;
         }
 
 
