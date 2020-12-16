@@ -60,6 +60,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbShared.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Emailer.cs" />
     <Compile Include="Helper\Logging.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +69,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

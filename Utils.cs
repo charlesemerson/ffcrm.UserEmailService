@@ -10,10 +10,10 @@ namespace ffcrm.UserEmailService
 {
     public class Utils
     {
-        public string GetConnectionForDataCenter(string dataCenter = "")
+        public static string GetConnectionForDataCenter(string dataCenter = "")
         {
             // default connection
-            var connectionString = "Data Source=ffcrm-test.database.windows.net;Initial Catalog=CRM_TestPersist Security Info=True;User ID=ffcrmTest;Password=Test#9605";
+            var connectionString = "Data Source=ffcrm-test.database.windows.net;Initial Catalog=CRM_Test;Persist Security Info=True;User ID=ffcrmTest;Password=Test#9605";
             switch (dataCenter.ToLower().Trim())
             {
                 case "dev":
@@ -32,8 +32,18 @@ namespace ffcrm.UserEmailService
             return connectionString;
         }
 
+        public static bool IsBirthdayInRange(DateTime birthday, DateTime dateFrom, DateTime dateTo)
+        {
+            var temp = birthday.AddYears(dateFrom.Year - birthday.Year);
 
-        public string GetDataCenter(int subscriberId)
+            if (temp < dateFrom)
+                temp = temp.AddYears(1);
+
+            return birthday <= dateTo && temp >= dateFrom && temp <= dateTo;
+        }
+
+
+        public static string GetDataCenter(int subscriberId)
         {
             var subscriberDataCenter = new DbLoginDataContext(GetLoginConnection())
                                                 .GlobalSubscribers.Where(t => t.SubscriberId == subscriberId)
@@ -42,7 +52,7 @@ namespace ffcrm.UserEmailService
         }
 
 
-        public string GetLoginConnection(string dataCenter = "")
+        public static string GetLoginConnection(string dataCenter = "")
         {
             string loginConnection;
             switch (dataCenter)
@@ -61,7 +71,7 @@ namespace ffcrm.UserEmailService
         }
 
 
-        public string GetSharedConnection(string dataCenter = "")
+        public static string GetSharedConnection(string dataCenter = "")
         {
             string sharedConnectionString;
             switch (dataCenter)
@@ -81,7 +91,7 @@ namespace ffcrm.UserEmailService
         }
 
 
-        public string GetSharedConnectionForDataCenter(string dataCenter = "")
+        public static string GetSharedConnectionForDataCenter(string dataCenter = "")
         {
             // default connection
             var connectionString = "Data Source=ffcrm-test.database.windows.net;Initial Catalog=CRM_Test_Shared;Persist Security Info=True;User ID=ffcrmTest;Password=Test#9605";
