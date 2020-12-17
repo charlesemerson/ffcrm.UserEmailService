@@ -42,7 +42,6 @@ namespace ffcrm.UserEmailService
             return birthday <= dateTo && temp >= dateFrom && temp <= dateTo;
         }
 
-
         public static string GetDataCenter(int subscriberId)
         {
             var subscriberDataCenter = new DbLoginDataContext(GetLoginConnection())
@@ -50,7 +49,6 @@ namespace ffcrm.UserEmailService
                                                 .Select(t => t.DataCenter).FirstOrDefault();
             return subscriberDataCenter;
         }
-
 
         public static string GetLoginConnection(string dataCenter = "")
         {
@@ -69,7 +67,6 @@ namespace ffcrm.UserEmailService
 
             return loginConnection;
         }
-
 
         public static string GetSharedConnection(string dataCenter = "")
         {
@@ -90,10 +87,12 @@ namespace ffcrm.UserEmailService
             return sharedConnectionString;
         }
 
-
         public static string GetSharedConnectionForDataCenter(string dataCenter = "")
         {
             // default connection
+            if (dataCenter == null)
+                dataCenter = "";
+
             var connectionString = "Data Source=ffcrm-test.database.windows.net;Initial Catalog=CRM_Test_Shared;Persist Security Info=True;User ID=ffcrmTest;Password=Test#9605";
             switch (dataCenter.ToLower().Trim())
             {
@@ -112,7 +111,6 @@ namespace ffcrm.UserEmailService
             }
             return connectionString;
         }
-
 
         public string WriteToLog(string logFilePath, string logMessage)
         {
