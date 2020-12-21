@@ -1,16 +1,17 @@
 ﻿using ffcrm.UserEmailService.Models;
+using SendGrid;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net.Mail;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
+using SendGrid.Helpers.Mail;
+using ffcrm.UserEmailService.Shared;
 
 namespace ffcrm.UserEmailService.Helper
 {
     public class SendGridHelper
     {
+        private static readonly string SENDGRID_API_KEY = "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";
+        private static readonly string SENDGRID_MESSAGE_ID = "X-Message-Id";
 
         /// <summary>
         /// This function send the email using sendgrid API
@@ -32,9 +33,7 @@ namespace ffcrm.UserEmailService.Helper
                 {
                     SendEmail(recipient, request);
                 }
-
-            // TODO: direct email to non-CRM User or Contact ??
-
+             
             // send to other recipient 
             if (request.OtherRecipients != null)
                 foreach (var recipient in request.OtherRecipients)
@@ -46,45 +45,111 @@ namespace ffcrm.UserEmailService.Helper
         }
 
 
+
         private void SendEmail(Recipient recipient, SendEmailRequest request)
         {
             try
             {
-                MailMessage mailMsg = new MailMessage();
-                // To
-                mailMsg.To.Add(new MailAddress(recipient.EmailAddress, recipient.EmailAddress));
-                // From
-                mailMsg.From = new MailAddress(request.Sender.EmailAddress, request.Sender.Name);
+                var client = new SendGridClient(SENDGRID_API_KEY);
+                var from = new SendGrid.Helpers.Mail.EmailAddress(request.Sender.EmailAddress, request.Sender.Name);
+                var to = new SendGrid.Helpers.Mail.EmailAddress(recipient.EmailAddress);
+                var subject = request.Subject;
+                if (!string.IsNullOrEmpty(recipient.Name))
+                    to.Name = recipient.Name;
+                var htmlContent = request.HtmlBody;
 
+                // create sendgrid message
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlContent);
+
+                // set reply to email address
                 if (!string.IsNullOrEmpty(request.ReplyToEmail))
-                {
-                    //mailMsg.ReplyToList = new MailAddressCo(request.ReplyToEmail);
-                    mailMsg.ReplyToList.Add(request.ReplyToEmail);
-                }
+                    msg.ReplyTo = new SendGrid.Helpers.Mail.EmailAddress(recipient.EmailAddress);
 
-                // Subject and multipart/alternative Body
-                mailMsg.Subject = request.Subject;
-                string html = request.HtmlBody;
-                mailMsg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
-
-                // Init SmtpClient and send
-                SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", Convert.ToInt32(587));
-                System.Net.NetworkCredential credentials = new System.Net.NetworkCredential("azure_4cc10694f17920369e1b030c642df6c7@azure.com", "Sendgrid#1350");
-                smtpClient.Credentials = credentials;
-
+                // bind attachments
                 if (request.Attachments != null)
                 {
-                    foreach (var att in request.Attachments)
+                    foreach (var mailAttachment in request.Attachments)
                     {
-                        mailMsg.Attachments.Add(att);
+                        var sendGridAttachment = GetSendGridAttachment(mailAttachment);
+                        if (sendGridAttachment != null)
+                        {
+                            msg.Attachments.Add(sendGridAttachment);
+                        }
                     }
                 }
 
-                smtpClient.Send(mailMsg);
+                // send email and wait for the response
+                var response = client.SendEmailAsync(msg).Result;
+
+                // get message id from headers
+                var headers = response.Headers;
+                var messageId = headers.GetValues(SENDGRID_MESSAGE_ID).FirstOrDefault();
+                request.MessageId = messageId;
+
+
             }
             catch (Exception ex)
             {
+                request.IsError = true;
+                request.Error = ex.ToString();
+            }
+
+            // add email record
+            AddEmailRecord(request, recipient);
+        }
+
+
+
+        public int AddEmailRecord(SendEmailRequest request, Recipient recipient)
+        {
+            var sharedConnection = Utils.GetSharedConnection(request.DataCenter);
+            var sharedContext = new DbSharedDataContext(sharedConnection);
+            var currentDate = DateTime.Now;
+            var currentUTCDate = DateTime.UtcNow;
+            var email = new Email
+            {
+                DateSent = currentDate,
+                Subject = request.Subject,
+                EmailBodyHtml = request.HtmlBody,
+                FromName = request.Sender.Name,
+                FromEmailAddress = request.Sender.EmailAddress,
+                ToEmail = recipient.EmailAddress,
+                UtcSentDateTime = currentUTCDate,
+                ReplyToEmailAddress = request.ReplyToEmail,
+                Error = request.Error,
+                IsError = request.IsError,
+                MessageId = request.MessageId
+
+            };
+            sharedContext.Emails.InsertOnSubmit(email);
+            sharedContext.SubmitChanges();
+            return email.EmailId;
+        }
+
+
+
+        private Attachment GetSendGridAttachment(System.Net.Mail.Attachment attachment)
+        {
+            using (var stream = new MemoryStream())
+            {
+                try
+                {
+                    attachment.ContentStream.CopyTo(stream);
+                    return new Attachment()
+                    {
+                        Disposition = "attachment",
+                        Type = attachment.ContentType.MediaType,
+                        Filename = attachment.Name,
+                        ContentId = attachment.ContentId,
+                        Content = Convert.ToBase64String(stream.ToArray())
+                    };
+                }
+                finally
+                {
+                    stream.Close();
+                }
             }
         }
+
     }
 }

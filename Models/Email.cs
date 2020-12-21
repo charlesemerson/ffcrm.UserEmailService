@@ -26,5 +26,9 @@ namespace ffcrm.UserEmailService.Models
         public string HtmlBody { get; set; }
         public List<System.Net.Mail.Attachment> Attachments { get; set; }
         public string ReplyToEmail { get; set; }
+        public string MessageId { get; set; }
+        public bool IsError { get; internal set; }
+        public string Error { get; internal set; }
+        public string DataCenter { get; internal set; }
     }
 }

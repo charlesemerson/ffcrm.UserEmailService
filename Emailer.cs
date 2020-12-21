@@ -3,8 +3,7 @@ using ffcrm.UserEmailService.Login;
 using ffcrm.UserEmailService.Models;
 using ffcrm.UserEmailService.Shared;
 using System;
-using System.Collections.Generic;
-using System.IO;
+using System.Collections.Generic; 
 using System.Linq;
 using System.Text;
 
@@ -12,9 +11,6 @@ namespace ffcrm.UserEmailService
 {
     public class Emailer
     {
-        public Emailer()
-        {
-        }
 
         public void RunEmailer()
         {
@@ -46,8 +42,8 @@ namespace ffcrm.UserEmailService
                 var tasksUpcoming = GetTasks(dateFrom, dateTo, globalUser.GlobalUserId, globalUser.DataCenter);
                 var birthdaysUpcoming = GetBirthdays(dateFrom, dateTo, globalUser.UserId, globalUser.DataCenter);
 
-                var proposalsOverdue = GetProposals(new DateTime(2010,1,1), DateTime.UtcNow, globalDealIds, globalUser.DataCenter);
-                var contractsOverdue = GetContracts(new DateTime(2010,1,1), DateTime.UtcNow, globalDealIds, globalUser.DataCenter);
+                var proposalsOverdue = GetProposals(new DateTime(2010, 1, 1), DateTime.UtcNow, globalDealIds, globalUser.DataCenter);
+                var contractsOverdue = GetContracts(new DateTime(2010, 1, 1), DateTime.UtcNow, globalDealIds, globalUser.DataCenter);
                 var decisionsOverdue = GetDecisions(new DateTime(2010, 1, 1), DateTime.UtcNow, globalDealIds, globalUser.DataCenter);
                 var tasksOverdue = GetTasks(new DateTime(2010, 1, 1), DateTime.UtcNow, globalUser.GlobalUserId, globalUser.DataCenter);
 
@@ -310,7 +306,7 @@ namespace ffcrm.UserEmailService
 
                     stringBuilder.Append("</body></html>");
 
-                    //SendEmail(stringBuilder.ToString(), globalUser.EmailAddress);
+                    SendEmail(stringBuilder.ToString(), globalUser.EmailAddress, globalUser.DataCenter);
                 }
             }
         }
@@ -430,7 +426,7 @@ namespace ffcrm.UserEmailService
             return listBirthdays;
         }
 
-        private void SendEmail(string html, string toEmail)
+        private void SendEmail(string html, string toEmail, string dataCenter)
         {
             var CRM_AdminEmailSender =
                             new Recipient
@@ -441,6 +437,7 @@ namespace ffcrm.UserEmailService
 
             var request = new SendEmailRequest
             {
+                DataCenter = dataCenter,
                 Sender = CRM_AdminEmailSender,
                 Subject = "FirstFreight Weekly Digest",
                 HtmlBody = html,
