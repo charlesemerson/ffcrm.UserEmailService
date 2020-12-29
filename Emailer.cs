@@ -3,7 +3,7 @@ using ffcrm.UserEmailService.Login;
 using ffcrm.UserEmailService.Models;
 using ffcrm.UserEmailService.Shared;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -25,8 +25,7 @@ namespace ffcrm.UserEmailService
 
             var loginDb = new DbLoginDataContext(Utils.GetLoginConnection());
 
-            //var globalUsers = loginDb.GlobalUsers.Where(x => x.EmailDigest.ToLower() == "weekly").OrderBy(x => x.FullName);
-            var globalUsers = loginDb.GlobalUsers.OrderBy(x => x.FullName);
+            var globalUsers = loginDb.GlobalUsers.Where(x => x.EmailDigest.ToLower() == "weekly").OrderBy(x => x.FullName);
 
             foreach (var globalUser in globalUsers)
             {
@@ -111,27 +110,30 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var activity in activitiesUpcoming)
                     {
+                        var company = "";
+                        var contacts = "";
+                        var deal = "";
+
                         if (!string.IsNullOrWhiteSpace(activity.ContactNames))
                         {
-                            var company = "";
-                            var deal = "";
-
-                            if (!string.IsNullOrWhiteSpace(activity.CompanyName))
-                            {
-                                company = $"| Company: {activity.CompanyName}";
-                            }
-
-                            var dealName = GetDealNameFromActivity(globalUser.DataCenter, activity.ActivityId);
-
-                            if (!string.IsNullOrWhiteSpace(dealName))
-                            {
-                                deal = $"| Deal: {dealName}";
-                            }
-
-                            var text = $"{activity.ActivityDate:ddd, dd-MMM-yy HH:mm} - External Meeting with: {activity.ContactNames} {company} {deal}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, activity.ActivityDate));
+                            contacts = $"with {activity.ContactNames}";
                         }
+
+                        if (!string.IsNullOrWhiteSpace(activity.CompanyName))
+                        {
+                            company = $"| Company: {activity.CompanyName}";
+                        }
+
+                        var dealName = GetDealNameFromActivity(globalUser.DataCenter, activity.ActivityId);
+
+                        if (!string.IsNullOrWhiteSpace(dealName))
+                        {
+                            deal = $"| Deal: {dealName}";
+                        }
+
+                        var text = $"{activity.ActivityDate:ddd, dd-MMM-yy HH:mm} - {activity.CategoryName} {contacts} {company} {deal}";
+
+                        listUpcoming.Add(new Tuple<string, DateTime>(text, activity.ActivityDate));
                     }
                 }
 
@@ -442,11 +444,10 @@ namespace ffcrm.UserEmailService
                 Subject = "FirstFreight Weekly Digest",
                 HtmlBody = html,
                 OtherRecipients = new List<Recipient> {
-                        new Recipient{
-                            EmailAddress = toEmail
-                        },
+                        new Recipient { EmailAddress = toEmail },
+                        new Recipient { EmailAddress = "charles@firstfreight.com" },
                         // send copy of email to archive + dev
-                        new Recipient{EmailAddress = "sendgrid@firstfreight.com" },
+                        new Recipient {EmailAddress = "sendgrid@firstfreight.com" },
                     }
             };
 
