@@ -406,3 +406,64 @@ namespace ffcrm.UserEmailService
         }
     }
 }
+
+//Template
+/*
+ <mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="20px" font-weight="bold" font-family="helvetica">Weekly CRM Email</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#C6E0B4" full-width="full-width">
+      <mj-column width="50%">
+        <mj-text font-size="20px" font-weight="bold" font-family="helvetica">UPCOMING THIS WEEK</mj-text>
+      </mj-column>
+      <mj-column width="50%">
+        <mj-text font-size="20px" font-weight="bold" font-family="helvetica">{dateFrom} thru {dateTo}</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section full-width="full-width">
+      <mj-column>
+        <mj-table>
+          <tr>
+            <td width="80">Fri 23-Oct-20</td>
+            <td width="40">09:00</td>
+            <td>Proposal Past Due</td>
+            <td>New Company Name bbwp4884</td>
+            <td>New Deal njwmg | Task name for edit</td>
+            <td>Maersk</td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+      <mj-section background-color="#FFABAB" full-width="full-width">
+      <mj-column>
+        <mj-text font-size="20px" font-weight="bold" font-family="helvetica">PAST DUE</mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section full-width="full-width">
+      <mj-column>
+        <mj-table>
+          <tr>
+            <td>Mon</td>
+            <td>04-Jan-21</td>
+            <td>09:00</td>
+            <td>Video Call</td>
+            <td>Maersk</td>
+            <td>Testing 123</td>
+          </tr>
+          <tr>
+            <td>Mon</td>
+            <td>04-Jan-21</td>
+            <td>09:00</td>
+            <td>Video Call</td>
+            <td>Maersk</td>
+            <td>Testing 123</td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>*/
