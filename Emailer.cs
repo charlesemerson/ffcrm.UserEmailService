@@ -29,8 +29,8 @@ namespace ffcrm.UserEmailService
 
             foreach (var globalUser in globalUsers)
             {
-                var listUpcoming = new List<Tuple<string, DateTime>>();
-                var listOverdue = new List<Tuple<string, DateTime>>();
+                var listUpcoming = new List<Tuple<GridItem, DateTime>>();
+                var listOverdue = new List<Tuple<GridItem, DateTime>>();
 
                 var globalDealIds = GetGlobalDealIdsForGlobalUser(globalUser.GlobalUserId, globalUser.DataCenter);
 
@@ -50,19 +50,13 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var proposal in proposalsUpcoming)
                     {
-                        if (!string.IsNullOrWhiteSpace(proposal.DealName))
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(proposal.CompanyName))
-                            {
-                                company = $"| Company: {proposal.CompanyName}";
-                            }
-
-                            var text = $"{proposal.DateProposalDue.Value:ddd, dd-MMM-yy} - Proposal Due for: {proposal.DealName} {company}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, proposal.DateProposalDue.Value));
-                        }
+                            Cell1 = $"{proposal.DateProposalDue.Value:ddd dd-MMM-yy}",
+                            Cell3 = "Proposal Due",
+                            Cell4 = proposal.CompanyName,
+                            Cell5 = proposal.DealName
+                        }, proposal.DateProposalDue.Value));
                     }
                 }
 
@@ -70,19 +64,13 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var contract in contractsUpcoming)
                     {
-                        if (!string.IsNullOrWhiteSpace(contract.DealName))
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(contract.CompanyName))
-                            {
-                                company = $"| Company: {contract.CompanyName}";
-                            }
-
-                            var text = $"{contract.ContractEndDate.Value:ddd, dd-MMM-yy} - Contract ending for: {contract.DealName} {company}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, contract.ContractEndDate.Value));
-                        }
+                            Cell1 = $"{contract.ContractEndDate.Value:ddd dd-MMM-yy}",
+                            Cell3 = "Contract Ending",
+                            Cell4 = contract.CompanyName,
+                            Cell5 = contract.DealName
+                        }, contract.ContractEndDate.Value));
                     }
                 }
 
@@ -90,19 +78,13 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var decision in decisionsUpcoming)
                     {
-                        if (!string.IsNullOrWhiteSpace(decision.DealName))
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(decision.CompanyName))
-                            {
-                                company = $"| Company: {decision.CompanyName}";
-                            }
-
-                            var text = $"{decision.DecisionDate.Value:ddd, dd-MMM-yy} - Decision Due for: {decision.DealName} {company}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, decision.DecisionDate.Value));
-                        }
+                            Cell1 = $"{decision.DecisionDate.Value:ddd dd-MMM-yy}",
+                            Cell3 = "Decision Due",
+                            Cell4 = decision.CompanyName,
+                            Cell5 = decision.DealName
+                        }, decision.DecisionDate.Value));
                     }
                 }
 
@@ -110,30 +92,23 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var activity in activitiesUpcoming)
                     {
-                        var company = "";
-                        var contacts = "";
                         var deal = "";
-
-                        if (!string.IsNullOrWhiteSpace(activity.ContactNames))
-                        {
-                            contacts = $"with {activity.ContactNames}";
-                        }
-
-                        if (!string.IsNullOrWhiteSpace(activity.CompanyName))
-                        {
-                            company = $"| Company: {activity.CompanyName}";
-                        }
 
                         var dealName = GetDealNameFromActivity(globalUser.DataCenter, activity.ActivityId);
 
                         if (!string.IsNullOrWhiteSpace(dealName))
                         {
-                            deal = $"| Deal: {dealName}";
+                            deal = $"| {dealName}";
                         }
 
-                        var text = $"{activity.ActivityDate:ddd, dd-MMM-yy HH:mm} - {activity.CategoryName} {contacts} {company} {deal}";
-
-                        listUpcoming.Add(new Tuple<string, DateTime>(text, activity.ActivityDate));
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
+                        {
+                            Cell1 = $"{activity.ActivityDate:ddd dd-MMM-yy}",
+                            Cell2 = $"{activity.ActivityDate:HH:mm}",
+                            Cell3 = activity.CategoryName,
+                            Cell4 = activity.CompanyName,
+                            Cell5 = $"{activity.ContactNames} {deal}"
+                        }, activity.ActivityDate));
                     }
                 }
 
@@ -141,27 +116,18 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var task in tasksUpcoming)
                     {
-                        if (!string.IsNullOrWhiteSpace(task.TaskName))
+                        var dealName = GetDealNameFromActivity(globalUser.DataCenter, task.ActivityId);
+
+                        if (!string.IsNullOrWhiteSpace(dealName))
+                            dealName = $"{dealName} | ";
+
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            var company = "";
-                            var deal = "";
-
-                            if (!string.IsNullOrWhiteSpace(task.CompanyName))
-                            {
-                                company = $"| Company: {task.CompanyName}";
-                            }
-
-                            var dealName = GetDealNameFromActivity(globalUser.DataCenter, task.ActivityId);
-
-                            if (!string.IsNullOrWhiteSpace(dealName))
-                            {
-                                deal = $"| Deal: {dealName}";
-                            }
-
-                            var text = $"{task.DueDate.Value:ddd, dd-MMM-yy} - Task Due: {task.TaskName} {company} {deal}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, task.DueDate.Value));
-                        }
+                            Cell1 = $"{task.DueDate.Value:ddd dd-MMM-yy}",
+                            Cell3 = "Task Due",
+                            Cell4 = task.CompanyName,
+                            Cell5 = $"{dealName}{task.TaskName}",
+                        }, task.DueDate.Value));
                     }
                 }
 
@@ -171,13 +137,6 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(birthday.ContactName))
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(birthday.CompanyName))
-                            {
-                                company = $"| Company: {birthday.CompanyName}";
-                            }
-
                             var birthdayYear = dateFrom.Year;
 
                             if (birthday.BirthdayMonth == dateTo.Month)
@@ -187,9 +146,13 @@ namespace ffcrm.UserEmailService
 
                             var birthdayDate = new DateTime(birthdayYear, birthday.BirthdayMonth, birthday.BirthdayDay);
 
-                            var text = $"{birthdayDate:ddd, dd-MMM-yy} - Birthday for: {birthday.ContactName} {company}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, birthdayDate));
+                            listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
+                            {
+                                Cell1 = $"{birthdayDate:ddd dd-MMM-yy}",
+                                Cell3 = "Birthday",
+                                Cell4 = birthday.CompanyName,
+                                Cell5 = birthday.ContactName,
+                            }, birthdayDate));
                         }
                     }
                 }
@@ -200,16 +163,13 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(proposal.DealName))
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(proposal.CompanyName))
+                            listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                company = $"| Company: {proposal.CompanyName}";
-                            }
-
-                            var text = $"{proposal.DateProposalDue.Value:ddd, dd-MMM-yy} - Proposal Past Due for: {proposal.DealName} {company}";
-
-                            listOverdue.Add(new Tuple<string, DateTime>(text, proposal.DateProposalDue.Value));
+                                Cell1 = $"{proposal.DateProposalDue.Value:ddd dd-MMM-yy}",
+                                Cell3 = "Proposal Past Due",
+                                Cell4 = proposal.CompanyName,
+                                Cell5 = proposal.DealName,
+                            }, proposal.DateProposalDue.Value));
                         }
                     }
                 }
@@ -220,16 +180,13 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(contract.DealName))
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(contract.CompanyName))
+                            listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                company = $"| Company: {contract.CompanyName}";
-                            }
-
-                            var text = $"{contract.ContractEndDate.Value:ddd, dd-MMM-yy} - Contract Ended for: {contract.DealName} {company}";
-
-                            listOverdue.Add(new Tuple<string, DateTime>(text, contract.ContractEndDate.Value));
+                                Cell1 = $"{contract.ContractEndDate.Value:ddd dd-MMM-yy}",
+                                Cell3 = "Contract Past Due",
+                                Cell4 = contract.CompanyName,
+                                Cell5 = contract.DealName,
+                            }, contract.ContractEndDate.Value));
                         }
                     }
                 }
@@ -240,16 +197,13 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(decision.DealName))
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(decision.CompanyName))
+                            listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                company = $"| Company: {decision.CompanyName}";
-                            }
-
-                            var text = $"{decision.DecisionDate.Value:ddd, dd-MMM-yy} - Decision Past Due for: {decision.DealName} {company}";
-
-                            listOverdue.Add(new Tuple<string, DateTime>(text, decision.DecisionDate.Value));
+                                Cell1 = $"{decision.DecisionDate.Value:ddd dd-MMM-yy}",
+                                Cell3 = "Decision Past Due",
+                                Cell4 = decision.CompanyName,
+                                Cell5 = decision.DealName,
+                            }, decision.DecisionDate.Value));
                         }
                     }
                 }
@@ -260,55 +214,51 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(task.TaskName))
                         {
-                            var company = "";
-                            var deal = "";
-
-                            if (!string.IsNullOrWhiteSpace(task.CompanyName))
-                            {
-                                company = $"| Company: {task.CompanyName}";
-                            }
-
                             var dealName = GetDealNameFromActivity(globalUser.DataCenter, task.ActivityId);
 
                             if (!string.IsNullOrWhiteSpace(dealName))
+                                dealName = $"{dealName} | ";
+
+                            listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                deal = $"| Deal: {dealName}";
-                            }
-
-                            var text = $"{task.DueDate.Value:ddd, dd-MMM-yy} - Task Past Due: {task.TaskName} {company} {deal}";
-
-                            listOverdue.Add(new Tuple<string, DateTime>(text, task.DueDate.Value));
+                                Cell1 = $"{task.DueDate.Value:ddd dd-MMM-yy}",
+                                Cell3 = "Task Past Due",
+                                Cell4 = task.CompanyName,
+                                Cell5 = $"{dealName}{task.TaskName}",
+                            }, task.DueDate.Value));
                         }
                     }
                 }
 
                 if (listUpcoming.Any() || listOverdue.Any())
                 {
-                    var stringBuilder = new StringBuilder("<html><body>");
+                    var html = "<!doctype html><html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><head><title></title><!--[if !mso]><!-- --><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><!--<![endif]--><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style type=\"text/css\">#outlook a { padding:0; } body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%; } table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt; } img { border:0;height:auto;line-height:100%; outline:none;text-decoration:none;-ms-interpolation-mode:bicubic; } p { display:block;margin:13px 0; }</style><!--[if mso]> <xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml> <![endif]--><!--[if lte mso 11]> <style type=\"text/css\"> .mj-outlook-group-fix { width:100% !important; } </style> <![endif]--><!--[if !mso]><!--><link href=\"https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700\" rel=\"stylesheet\" type=\"text/css\"><style type=\"text/css\">@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);</style><!--<![endif]--><style type=\"text/css\">@media only screen and (min-width:480px) { .mj-column-per-100 { width:100% !important; max-width: 100%; } .mj-column-per-50 { width:50% !important; max-width: 50%; } }</style><style type=\"text/css\"></style></head><body><div><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">Weekly CRM Email</div></td></tr></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#C6E0B4;background-color:#C6E0B4;width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:300px;\" ><![endif]--><div class=\"mj-column-per-50 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">UPCOMING THIS WEEK</div></td></tr></table></div><!--[if mso | IE]></td><td class=\"\" style=\"vertical-align:top;width:300px;\" ><![endif]--><div class=\"mj-column-per-50 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">{dateFrom} thru {dateTo}</div></td></tr></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\" style=\"color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;\">{upcomingTable}</table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#FFABAB;background-color:#FFABAB;width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">PAST DUE</div></td></tr></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\" style=\"color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;\">{pastDueTable}</table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div></body></html>";
+
+                    var stringBuilderUpcoming = new StringBuilder();
+                    var stringBuilderOverdue = new StringBuilder();
 
                     if (listUpcoming.Any())
                     {
-                        stringBuilder.Append("<b>UPCOMING THIS WEEK</b><hr>");
-
                         foreach (var text in listUpcoming.OrderBy(x => x.Item2))
                         {
-                            stringBuilder.Append($"{text.Item1}</br>");
+                            stringBuilderUpcoming.Append($"<tr><td width=\"80\">{text.Item1.Cell1}</td><td width=\"40\">{text.Item1.Cell2}</td><td>{text.Item1.Cell3}</td><td>{text.Item1.Cell4}</td><td>{text.Item1.Cell5}</td></tr>");
                         }
                     }
 
                     if (listOverdue.Any())
                     {
-                        stringBuilder.Append("</br><b>PAST DUE</b><hr>");
-
                         foreach (var text in listOverdue.OrderBy(x => x.Item2))
                         {
-                            stringBuilder.Append($"{text.Item1}</br>");
+                            stringBuilderOverdue.Append($"<tr><td width=\"80\">{text.Item1.Cell1}</td><td width=\"40\">{text.Item1.Cell2}</td><td>{text.Item1.Cell3}</td><td>{text.Item1.Cell4}</td><td>{text.Item1.Cell5}</td></tr>");
                         }
                     }
 
-                    stringBuilder.Append("</body></html>");
+                    html = html.Replace("{dateFrom}", $"{dateFrom:ddd, dd-MMM-yy}");
+                    html = html.Replace("{dateTo}", $"{dateTo:ddd, dd-MMM-yy}");
+                    html = html.Replace("{upcomingTable}", stringBuilderUpcoming.ToString());
+                    html = html.Replace("{pastDueTable}", stringBuilderOverdue.ToString());
 
-                    SendEmail(stringBuilder.ToString(), globalUser.EmailAddress, globalUser.DataCenter);
+                    SendEmail(html, globalUser.EmailAddress, globalUser.DataCenter);
                 }
             }
         }
@@ -444,11 +394,11 @@ namespace ffcrm.UserEmailService
                 Subject = "FirstFreight Weekly Digest",
                 HtmlBody = html,
                 OtherRecipients = new List<Recipient> {
-                        new Recipient { EmailAddress = toEmail },
-                        new Recipient { EmailAddress = "charles@firstfreight.com" },
-                        // send copy of email to archive + dev
-                        new Recipient {EmailAddress = "sendgrid@firstfreight.com" },
-                    }
+                    new Recipient { EmailAddress = toEmail },
+                    new Recipient { EmailAddress = "charles@firstfreight.com" },
+                    // send copy of email to archive + dev
+                    new Recipient {EmailAddress = "sendgrid@firstfreight.com" }
+                }
             };
 
             // send email
