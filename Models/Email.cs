@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ffcrm.UserEmailService.Models
 {
@@ -27,5 +31,4 @@ namespace ffcrm.UserEmailService.Models
         public string Error { get; internal set; }
         public string DataCenter { get; internal set; }
     }
-
 }
