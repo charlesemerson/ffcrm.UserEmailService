@@ -17,10 +17,10 @@ namespace ffcrm.UserEmailService
             var lastSunday = DateTime.UtcNow.AddDays(-(int)DateTime.UtcNow.DayOfWeek);
             var nextSaturday = DateTime.UtcNow.AddDays(6 - (int)DateTime.UtcNow.DayOfWeek);
 
-            //Date from is last Sunday at midnight (UTC).
+            // date from is last Sunday at midnight (UTC)
             var dateFrom = new DateTime(lastSunday.Year, lastSunday.Month, lastSunday.Day, 0, 0, 0);
 
-            //Date to is next Saturday at 23:59:59 (UTC).
+            // date to is next Saturday at 23:59:59 (UTC)
             var dateTo = new DateTime(nextSaturday.Year, nextSaturday.Month, nextSaturday.Day, 23, 59, 59);
 
             var loginDb = new DbLoginDataContext(Utils.GetLoginConnection());
@@ -46,16 +46,19 @@ namespace ffcrm.UserEmailService
                 var decisionsOverdue = GetDecisions(new DateTime(2010, 1, 1), DateTime.UtcNow, globalDealIds, globalUser.DataCenter);
                 var tasksOverdue = GetTasks(new DateTime(2010, 1, 1), DateTime.UtcNow, globalUser.GlobalUserId, globalUser.DataCenter);
 
+                // UPCOMING
                 if (proposalsUpcoming != null && proposalsUpcoming.Any())
                 {
                     foreach (var proposal in proposalsUpcoming)
                     {
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{proposal.DateProposalDue.Value:ddd dd-MMM-yy}",
-                            Cell3 = "Proposal Due",
-                            Cell4 = proposal.CompanyName,
-                            Cell5 = proposal.DealName
+                            Cell1 = $"{proposal.DateProposalDue.Value:ddd}",
+                            Cell2 = $"{proposal.DateProposalDue.Value:dd-MMM-yy}",
+                            Cell3 = "",
+                            Cell4 = "Proposal Due",
+                            Cell5 = proposal.CompanyName,
+                            Cell6 = proposal.DealName
                         }, proposal.DateProposalDue.Value));
                     }
                 }
@@ -66,10 +69,12 @@ namespace ffcrm.UserEmailService
                     {
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{contract.ContractEndDate.Value:ddd dd-MMM-yy}",
-                            Cell3 = "Contract Ending",
-                            Cell4 = contract.CompanyName,
-                            Cell5 = contract.DealName
+                            Cell1 = $"{contract.ContractEndDate.Value:ddd}",
+                            Cell2 = $"{contract.ContractEndDate.Value:dd-MMM-yy}",
+                            Cell3 = "",
+                            Cell4 = "Contract Ending",
+                            Cell5 = contract.CompanyName,
+                            Cell6 = contract.DealName
                         }, contract.ContractEndDate.Value));
                     }
                 }
@@ -80,10 +85,12 @@ namespace ffcrm.UserEmailService
                     {
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{decision.DecisionDate.Value:ddd dd-MMM-yy}",
-                            Cell3 = "Decision Due",
-                            Cell4 = decision.CompanyName,
-                            Cell5 = decision.DealName
+                            Cell1 = $"{decision.DecisionDate.Value:ddd}",
+                            Cell2 = $"{decision.DecisionDate.Value:dd-MMM-yy}",
+                            Cell3 = "",
+                            Cell4 = "Decision Due",
+                            Cell5 = decision.CompanyName,
+                            Cell6 = decision.DealName
                         }, decision.DecisionDate.Value));
                     }
                 }
@@ -103,11 +110,12 @@ namespace ffcrm.UserEmailService
 
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{activity.ActivityDate:ddd dd-MMM-yy}",
-                            Cell2 = $"{activity.ActivityDate:HH:mm}",
-                            Cell3 = activity.CategoryName,
-                            Cell4 = activity.CompanyName,
-                            Cell5 = $"{activity.ContactNames} {deal}"
+                            Cell1 = $"{activity.ActivityDate:ddd}",
+                            Cell2 = $"{activity.ActivityDate:dd-MMM-yy}",
+                            Cell3 = $"{activity.ActivityDate:HH:mm}",
+                            Cell4 = activity.CategoryName,
+                            Cell5 = activity.CompanyName,
+                            Cell6 = $"{activity.ContactNames} {deal}"
                         }, activity.ActivityDate));
                     }
                 }
@@ -123,10 +131,12 @@ namespace ffcrm.UserEmailService
 
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{task.DueDate.Value:ddd dd-MMM-yy}",
-                            Cell3 = "Task Due",
-                            Cell4 = task.CompanyName,
-                            Cell5 = $"{dealName}{task.TaskName}",
+                            Cell1 = $"{task.DueDate.Value:ddd}",
+                            Cell2 = $"{task.DueDate.Value:dd-MMM-yy}",
+                            Cell3 = "",
+                            Cell4 = "Task Due",
+                            Cell5 = task.CompanyName,
+                            Cell6 = $"{dealName}{task.TaskName}",
                         }, task.DueDate.Value));
                     }
                 }
@@ -148,15 +158,18 @@ namespace ffcrm.UserEmailService
 
                             listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{birthdayDate:ddd dd-MMM-yy}",
-                                Cell3 = "Birthday",
-                                Cell4 = birthday.CompanyName,
-                                Cell5 = birthday.ContactName,
+                                Cell1 = $"{birthdayDate:ddd}",
+                                Cell2 = $"{birthdayDate:dd-MMM-yy}",
+                                Cell3 = "",
+                                Cell4 = "Birthday",
+                                Cell5 = birthday.CompanyName,
+                                Cell6 = birthday.ContactName,
                             }, birthdayDate));
                         }
                     }
                 }
 
+                // OVERDUE
                 if (proposalsOverdue != null && proposalsOverdue.Any())
                 {
                     foreach (var proposal in proposalsOverdue)
@@ -165,10 +178,12 @@ namespace ffcrm.UserEmailService
                         {
                             listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{proposal.DateProposalDue.Value:ddd dd-MMM-yy}",
-                                Cell3 = "Proposal Past Due",
-                                Cell4 = proposal.CompanyName,
-                                Cell5 = proposal.DealName,
+                                Cell1 = $"{proposal.DateProposalDue.Value:ddd}",
+                                Cell2 = $"{proposal.DateProposalDue.Value:dd-MMM-yy}",
+                                Cell3 = "",
+                                Cell4 = "Proposal Past Due",
+                                Cell5 = proposal.CompanyName,
+                                Cell6 = proposal.DealName,
                             }, proposal.DateProposalDue.Value));
                         }
                     }
@@ -182,10 +197,12 @@ namespace ffcrm.UserEmailService
                         {
                             listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{contract.ContractEndDate.Value:ddd dd-MMM-yy}",
-                                Cell3 = "Contract Past Due",
-                                Cell4 = contract.CompanyName,
-                                Cell5 = contract.DealName,
+                                Cell1 = $"{contract.ContractEndDate.Value:ddd}",
+                                Cell2 = $"{contract.ContractEndDate.Value:dd-MMM-yy}",
+                                Cell3 = "",
+                                Cell4 = "Contract Past Due",
+                                Cell5 = contract.CompanyName,
+                                Cell6 = contract.DealName,
                             }, contract.ContractEndDate.Value));
                         }
                     }
@@ -199,10 +216,12 @@ namespace ffcrm.UserEmailService
                         {
                             listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{decision.DecisionDate.Value:ddd dd-MMM-yy}",
-                                Cell3 = "Decision Past Due",
-                                Cell4 = decision.CompanyName,
-                                Cell5 = decision.DealName,
+                                Cell1 = $"{decision.DecisionDate.Value:ddd}",
+                                Cell2 = $"{decision.DecisionDate.Value:dd-MMM-yy}",
+                                Cell3 = "",
+                                Cell4 = "Decision Past Due",
+                                Cell5 = decision.CompanyName,
+                                Cell6 = decision.DealName,
                             }, decision.DecisionDate.Value));
                         }
                     }
@@ -221,10 +240,12 @@ namespace ffcrm.UserEmailService
 
                             listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{task.DueDate.Value:ddd dd-MMM-yy}",
-                                Cell3 = "Task Past Due",
-                                Cell4 = task.CompanyName,
-                                Cell5 = $"{dealName}{task.TaskName}",
+                                Cell1 = $"{task.DueDate.Value:ddd}",
+                                Cell2 = $"{task.DueDate.Value:dd-MMM-yy}",
+                                Cell3 = "",
+                                Cell4 = "Task Past Due",
+                                Cell5 = task.CompanyName,
+                                Cell6 = $"{dealName}{task.TaskName}",
                             }, task.DueDate.Value));
                         }
                     }
@@ -232,13 +253,868 @@ namespace ffcrm.UserEmailService
 
                 if (listUpcoming.Any() || listOverdue.Any())
                 {
-                    var html = "<!doctype html><html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><head><title></title><!--[if !mso]><!-- --><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><!--<![endif]--><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style type=\"text/css\">#outlook a { padding:0; } body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%; } table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt; } img { border:0;height:auto;line-height:100%; outline:none;text-decoration:none;-ms-interpolation-mode:bicubic; } p { display:block;margin:13px 0; }</style><!--[if mso]> <xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml> <![endif]--><!--[if lte mso 11]> <style type=\"text/css\"> .mj-outlook-group-fix { width:100% !important; } </style> <![endif]--><!--[if !mso]><!--><link href=\"https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700\" rel=\"stylesheet\" type=\"text/css\"><style type=\"text/css\">@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);</style><!--<![endif]--><style type=\"text/css\">@media only screen and (min-width:480px) { .mj-column-per-100 { width:100% !important; max-width: 100%; } .mj-column-per-50 { width:50% !important; max-width: 50%; } }</style><style type=\"text/css\"></style></head><body><div><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">Weekly CRM Email</div></td></tr></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#C6E0B4;background-color:#C6E0B4;width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:300px;\" ><![endif]--><div class=\"mj-column-per-50 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">UPCOMING THIS WEEK</div></td></tr></table></div><!--[if mso | IE]></td><td class=\"\" style=\"vertical-align:top;width:300px;\" ><![endif]--><div class=\"mj-column-per-50 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">{dateFrom} thru {dateTo}</div></td></tr></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\" style=\"color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;\">{upcomingTable}</table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#FFABAB;background-color:#FFABAB;width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">PAST DUE</div></td></tr></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\" style=\"color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;\">{pastDueTable}</table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div></body></html>";
+                    // email resposive template
+
+                    var x = < !doctype html >
+ < html xmlns = "http://www.w3.org/1999/xhtml" xmlns: v = "urn:schemas-microsoft-com:vml" xmlns: o = "urn:schemas-microsoft-com:office:office" >
+        
+
+        < head >
+        
+          < title > </ title >
+        
+          < !--[if !mso]>< !---->
+         
+           < meta http - equiv = "X-UA-Compatible" content = "IE=edge" >
+              
+                < !--< ![endif]-- >
+              
+                < meta http - equiv = "Content-Type" content = "text/html; charset=UTF-8" >
+                   
+                     < meta name = "viewport" content = "width=device-width, initial-scale=1" >
+                      
+                        < style type = "text/css" >
+# outlook a {
+      padding: 0;
+                }
+
+                body {
+                margin: 0;
+                padding: 0;
+                    -webkit - text - size - adjust: 100 %;
+                    -ms - text - size - adjust: 100 %;
+                }
+
+                table,
+    td {
+                    border - collapse: collapse;
+                    mso - table - lspace: 0pt;
+                    mso - table - rspace: 0pt;
+                }
+
+                img {
+                border: 0;
+                height: auto;
+                    line - height: 100 %;
+                outline: none;
+                    text - decoration: none;
+                    -ms - interpolation - mode: bicubic;
+                }
+
+                p {
+                display: block;
+                margin: 13px 0;
+                }
+  </ style >
+  < !--[if mso]>
+ 
+         < xml >
+ 
+         < o:OfficeDocumentSettings >
+  
+            < o:AllowPNG />
+   
+             < o:PixelsPerInch > 96 </ o:PixelsPerInch >
+        
+                </ o:OfficeDocumentSettings >
+         
+                 </ xml >
+         
+                 < ![endif]-- >
+         
+           < !--[if lte mso 11]>
+          
+                  < style type = "text/css" >
+           
+                     .mj - outlook - group - fix { width: 100 % !important; }
+        </ style >
+        < ![endif]-- >
+  < !--[if !mso]>< !-->
+ 
+   < link href = "https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700" rel = "stylesheet" type = "text/css" >
+      
+        < style type = "text/css" >
+           @import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);
+
+         </ style >
+       
+         < !--< ![endif]-- >
+       
+         < style type = "text/css" >
+           @media only screen and(min - width:480px) {
+      .mj - column - per - 100 {
+                    width: 100 % !important;
+                        max - width: 100 %;
+                    }
+      .mj - column - per - 50 {
+                    width: 50 % !important;
+                        max - width: 50 %;
+                    }
+                }
+  </ style >
+  < style type = "text/css" >
+ 
+   </ style >
+ </ head >
+ 
+
+ < body >
+ 
+   < div style = "" >
+  
+      < !--[if mso | IE]>
+   
+         < table
+         align = "center" border = "0" cellpadding = "0" cellspacing = "0" class="" style="width:600px;" width="600"
+      >
+        <tr>
+          <td style = "line-height:0px;font-size:0px;mso-line-height-rule:exactly;" >
+      < ![endif]-- >
+    < div style="margin:0px auto;max-width:600px;">
+      <table align = "center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+        <tbody>
+          <tr>
+            <td style = "direction:ltr;font-size:0px;padding:20px 0;text-align:center;" >
+              < !--[if mso | IE] >
+                  < table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                
+        <tr>
+      
+            <td
+               class="" style="vertical-align:top;width:600px;"
+            >
+          <![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border = "0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                  <tr>
+                    <td align = "left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                      <div style = "font-family:helvetica;font-size:24px;font-weight:bold;line-height:1;text-align:left;color:#000000;" > Weekly CRM Email</div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <!--[if mso | IE]>
+            </td>
+          
+        </tr>
+      
+                  </table>
+                <![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]>
+          </td>
+        </tr>
+      </table>
+      <![endif]-->
+    <table align = "center" border= "0" cellpadding= "0" cellspacing= "0" role= "presentation" style= "background:#C6E0B4;background-color:#C6E0B4;width:100%;" >
+    
+          < tbody >
+    
+            < tr >
+    
+              < td >
+    
+                < !--[if mso | IE] >
+    
+          < table
+    
+             align= "center" border= "0" cellpadding= "0" cellspacing= "0" class="" style="width:600px;" width="600"
+      >
+        <tr>
+          <td style = "line-height:0px;font-size:0px;mso-line-height-rule:exactly;" >
+      < ![endif]-- >
+            < div style="margin:0px auto;max-width:600px;">
+              <table align = "center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+                <tbody>
+                  <tr>
+                    <td style = "direction:ltr;font-size:0px;padding:20px 0;text-align:center;" >
+                      < !--[if mso | IE] >
+                  < table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                
+        <tr>
+      
+            <td
+               class="" style="vertical-align:top;width:300px;"
+            >
+          <![endif]-->
+                      <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border = "0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                          <tr>
+                            <td align = "left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <div style = "font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;" > UPCOMING THIS WEEK</div>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!--[if mso | IE]>
+            </td>
+          
+            <td
+               class="" style="vertical-align:top;width:300px;"
+            >
+          <![endif]-->
+                      <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <table border = "0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                          <tr>
+                            <td align = "left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                              <div style = "font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;" >{dateFrom
+    }
+    thru {dateTo
+}</ div >
+
+</ td >
+
+</ tr >
+
+</ table >
+
+</ div >
+
+< !--[if mso | IE]>
+
+</ td >
+
+
+</ tr >
+
+
+</ table >
+
+< ![endif]-- >
+
+</ td >
+
+</ tr >
+
+</ tbody >
+
+</ table >
+
+</ div >
+
+< !--[if mso | IE]>
+
+</ td >
+
+</ tr >
+
+</ table >
+
+< ![endif]-- >
+
+</ td >
+
+</ tr >
+
+</ tbody >
+
+</ table >
+
+< table align = "center" border = "0" cellpadding = "0" cellspacing = "0" role = "presentation" style = "width:100%;" >
+
+< tbody >
+
+< tr >
+
+< td >
+
+< !--[if mso | IE]>
+
+< table
+         align = "center" border = "0" cellpadding = "0" cellspacing = "0" class= "" style = "width:600px;" width = "600"
+                 >
+           
+                   < tr >
+           
+                     < td style = "line-height:0px;font-size:0px;mso-line-height-rule:exactly;" >
+            
+                  < ![endif]-- >
+            
+                        < div style = "margin:0px auto;max-width:600px;" >
+             
+                           < table align = "center" border = "0" cellpadding = "0" cellspacing = "0" role = "presentation" style = "width:100%;" >
+                        
+                                        < tbody >
+                        
+                                          < tr >
+                        
+                                            < td style = "direction:ltr;font-size:0px;padding:20px 0;text-align:center;" >
+                         
+                                               < !--[if mso | IE]>
+                          
+                                            < table role = "presentation" border = "0" cellpadding = "0" cellspacing = "0" >
+                                 
+
+                                         < tr >
+                                 
+
+                                             < td
+               class= "" style = "vertical-align:top;width:600px;"
+             >
+ 
+           < ![endif]-- >
+ 
+                       < div class= "mj-column-per-100 mj-outlook-group-fix" style = "font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;" >
+   
+                           < table border = "0" cellpadding = "0" cellspacing = "0" role = "presentation" style = "vertical-align:top;" width = "100%" >
+              
+                                        < tr >
+              
+                                          < td align = "left" style = "font-size:0px;padding:10px 25px;word-break:break-word;" >
+                 
+                                               < table cellpadding = "0" cellspacing = "0" width = "100%" border = "0" style = "color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;" >
+                          
+                                                          < tr >
+                          
+                                                            < td width = "80" > Fri 23 - Oct - 20 </ td >
+                               
+                                                                 < td width = "40" > 09:00 </ td >
+                                    
+                                                                      < td > Proposal Past Due</td>
+                                                                         <td>New Company Name bbwp4884</td>
+                                  <td>New Deal njwmg | Task name for edit</td>
+                                                                         <td>Maersk</td>
+                                                                       </tr>
+                              </table>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!--[if mso | IE]>
+            </td>
+          
+        </tr>
+      
+                  </table>
+                <![endif]-->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--[if mso | IE]>
+          </td>
+        </tr>
+      </table>
+      <![endif]-->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table align = "center" border= "0" cellpadding= "0" cellspacing= "0" role= "presentation" style= "background:#FFABAB;background-color:#FFABAB;width:100%;" >
+                                       
+                                             < tbody >
+                                       
+                                               < tr >
+                                       
+                                                 < td >
+                                       
+                                                   < !--[if mso | IE] >
+                                       
+                                             < table
+                                       
+                                                align= "center" border= "0" cellpadding= "0" cellspacing= "0" class= "" style = "width:600px;" width = "600"
+                                                    >
+                                              
+                                                      < tr >
+                                              
+                                                        < td style = "line-height:0px;font-size:0px;mso-line-height-rule:exactly;" >
+                                               
+                                                     < ![endif]-- >
+                                               
+                                                           < div style = "margin:0px auto;max-width:600px;" >
+                                                
+                                                              < table align = "center" border = "0" cellpadding = "0" cellspacing = "0" role = "presentation" style = "width:100%;" >
+                                                           
+                                                                           < tbody >
+                                                           
+                                                                             < tr >
+                                                           
+                                                                               < td style = "direction:ltr;font-size:0px;padding:20px 0;text-align:center;" >
+                                                            
+                                                                                  < !--[if mso | IE]>
+                                                             
+                                                                               < table role = "presentation" border = "0" cellpadding = "0" cellspacing = "0" >
+                                                                    
+
+                                                                            < tr >
+                                                                    
+
+                                                                                < td
+               class= "" style = "vertical-align:top;width:600px;"
+             >
+ 
+           < ![endif]-- >
+ 
+                       < div class= "mj-column-per-100 mj-outlook-group-fix" style = "font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;" >
+   
+                           < table border = "0" cellpadding = "0" cellspacing = "0" role = "presentation" style = "vertical-align:top;" width = "100%" >
+              
+                                        < tr >
+              
+                                          < td align = "left" style = "font-size:0px;padding:10px 25px;word-break:break-word;" >
+                 
+                                               < div style = "font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;" > PAST DUE </ div >
+                      
+                                                  </ td >
+                      
+                                                </ tr >
+                      
+                                              </ table >
+                      
+                                            </ div >
+                      
+                                            < !--[if mso | IE]>
+                       
+                                   </ td >
+                       
+
+                               </ tr >
+                       
+
+                                         </ table >
+                       
+                                       < ![endif]-- >
+                       
+                                           </ td >
+                       
+                                         </ tr >
+                       
+                                       </ tbody >
+                       
+                                     </ table >
+                       
+                                   </ div >
+                       
+                                   < !--[if mso | IE]>
+                        
+                                  </ td >
+                        
+                                </ tr >
+                        
+                              </ table >
+                        
+                              < ![endif]-- >
+                        
+                                  </ td >
+                        
+                                </ tr >
+                        
+                              </ tbody >
+                        
+                            </ table >
+                        
+                            < table align = "center" border = "0" cellpadding = "0" cellspacing = "0" role = "presentation" style = "width:100%;" >
+                                   
+                                         < tbody >
+                                   
+                                           < tr >
+                                   
+                                             < td >
+                                   
+                                               < !--[if mso | IE]>
+                                    
+                                          < table
+         align = "center" border = "0" cellpadding = "0" cellspacing = "0" class= "" style = "width:600px;" width = "600"
+                 >
+           
+                   < tr >
+           
+                     < td style = "line-height:0px;font-size:0px;mso-line-height-rule:exactly;" >
+            
+                  < ![endif]-- >
+            
+                        < div style = "margin:0px auto;max-width:600px;" >
+             
+                           < table align = "center" border = "0" cellpadding = "0" cellspacing = "0" role = "presentation" style = "width:100%;" >
+                        
+                                        < tbody >
+                        
+                                          < tr >
+                        
+                                            < td style = "direction:ltr;font-size:0px;padding:20px 0;text-align:center;" >
+                         
+                                               < !--[if mso | IE]>
+                          
+                                            < table role = "presentation" border = "0" cellpadding = "0" cellspacing = "0" >
+                                 
+
+                                         < tr >
+                                 
+
+                                             < td
+               class= "" style = "vertical-align:top;width:600px;"
+             >
+ 
+           < ![endif]-- >
+ 
+                       < div class= "mj-column-per-100 mj-outlook-group-fix" style = "font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;" >
+   
+                           < table border = "0" cellpadding = "0" cellspacing = "0" role = "presentation" style = "vertical-align:top;" width = "100%" >
+              
+                                        < tr >
+              
+                                          < td align = "left" style = "font-size:0px;padding:10px 25px;word-break:break-word;" >
+                 
+                                               < table cellpadding = "0" cellspacing = "0" width = "100%" border = "0" style = "color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;" >
+                          
+                                                          < tr >
+                          
+                                                            < td > Mon </ td >
+                          
+                                                            < td > 04 - Jan - 21 </ td >
+                          
+                                                            < td > 09:00 </ td >
+                             
+                                                               < td > Video Call </ td >
+                                
+                                                                  < td > Maersk </ td >
+                                
+                                                                  < td > Testing 123 </ td >
+                                   
+                                                                   </ tr >
+                                   
+                                                                   < tr >
+                                   
+                                                                     < td > Mon </ td >
+                                   
+                                                                     < td > 04 - Jan - 21 </ td >
+                                   
+                                                                     < td > 09:00 </ td >
+                                      
+                                                                        < td > Video Call </ td >
+                                         
+                                                                           < td > Maersk </ td >
+                                         
+                                                                           < td > Testing 123 </ td >
+                                            
+                                                                            </ tr >
+                                            
+                                                                          </ table >
+                                            
+                                                                        </ td >
+                                            
+                                                                      </ tr >
+                                            
+                                                                    </ table >
+                                            
+                                                                  </ div >
+                                            
+                                                                  < !--[if mso | IE]>
+                                             
+                                                         </ td >
+                                             
+
+                                                     </ tr >
+                                             
+
+                                                               </ table >
+                                             
+                                                             < ![endif]-- >
+                                             
+                                                                 </ td >
+                                             
+                                                               </ tr >
+                                             
+                                                             </ tbody >
+                                             
+                                                           </ table >
+                                             
+                                                         </ div >
+                                             
+                                                         < !--[if mso | IE]>
+                                              
+                                                        </ td >
+                                              
+                                                      </ tr >
+                                              
+                                                    </ table >
+                                              
+                                                    < ![endif]-- >
+                                              
+                                                        </ td >
+                                              
+                                                      </ tr >
+                                              
+                                                    </ tbody >
+                                              
+                                                  </ table >
+                                              
+                                                </ div >
+                                              </ body >
+                                              
+
+                                              </ html >
+
+
+
+
+                                                                  var html = "<!doctype html><html xmlns=\'http://www.w3.org/1999/xhtml\' xmlns:v=\'urn:schemas-microsoft-com:vml\' xmlns:o=\'urn:schemas-microsoft-com:office:office\'>";
+                    // head
+                    html += "<head>";
+                    html +=     "<title></title>";
+                    html += "   <!--[if !mso]>";
+                    html +="        <!-- -->";
+                    html += "       <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">";
+                    html += "   <!--<![endif]-->";
+                    html += "   <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">";
+                    html += "   <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">";
+
+                    // styles
+                    html += "   <style type=\"text/css\">";
+                    html += "       #outlook ";
+                    html += "           a { padding:0; } ";
+                    html += "           body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%; } ";
+                    html += "           table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt; } ";
+                    html += "           img { border:0;height:auto;line-height:100%; outline:none;text-decoration:none;-ms-interpolation-mode:bicubic; } ";
+                    html += "           p { display:block;margin:13px 0; }";
+                    html += "   </style>";
+
+                    // current outlook
+                    html += "< !--[if mso]> ";
+                    html += "   < xml> ";
+                    html += "       < o:OfficeDocumentSettings> ";
+                    html += "       < o:AllowPNG/> ";
+                    html += "       < o:PixelsPerInch>96</o:PixelsPerInch> ";
+                    html += "       </o:OfficeDocumentSettings> ";
+                    html += "   </xml> ";
+                    html += "< ![endif]-->";
+
+                    // outlook 11
+                    html += "<!--[if lte mso 11]> ";
+                    html += "   < style type=\"text/css\"> .mj-outlook-group-fix { width:100% !important; } </style> ";
+                    html += "< ![endif]-->";
+
+                    // not outlook
+                    html += "<!--[if !mso]><!-->";
+                    html += "   <link href=\"https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700\" rel=\"stylesheet\" type=\"text/css\">";
+                    html += "   <style type=\"text/css\">@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);</style>";
+                    html += "< !--<![endif]-->";
+
+                    // responsive styles
+                    html += "<style type=\"text/css\">";
+                    html += "   @media only screen and (min-width:480px) ";
+                    html += "       { ";
+                    html += "           .mj-column-per-100  { width:100% !important; max-width: 100%; } ";
+                    html += "           .mj-column-per-50 { width:50% !important; max-width: 50%; } ";
+                    html += "       }";
+                    html += "</style>";
+
+                    html += "<style type=\"text/css\"></style>";
+
+                    html += "</head>";
+
+                    // email body
+                    html += "<body>";
+
+                    html += "<div>";
+                    html += "<!--[if mso | IE]>";
+                    html += "   <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" >";
+                    html += "       <tr>";
+                    html += "           <td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\">";
+                    html += "<![endif]-->";
+
+                    html += "<div style=\"margin:0px auto;max-width:600px;\">";
+                    html += "   <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\">";
+                    html += "       <tbody>";
+                    html += "           <tr>";
+                    html += "               <td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\">";
+
+                    // IE
+                    html += "<!--[if mso | IE]> ";
+                    html += "   < table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
+                    html += "       <tr>";
+                    html += "           <td class=\"\" style=\"vertical-align:top;width:600px;\" >";
+                    html += "<![endif]-->";
+
+                    // email title header
+                    html += "<div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\">";
+                    html += "   <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\">";
+                    html += "       <tr>";
+                    html += "           <td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\">";
+                    html += "               <div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">";
+                    html += "                   Weekly CRM Email";
+                    html += "               </div>";
+                    html += "           </td>";
+                    html += "       </tr>";
+                    html += "   </table>";
+                    html += "</div>";
+
+                    html += "<!--[if mso | IE]>";
+                    html += "           </td>";
+                    html += "       </tr>";
+                    html += "   </table>";
+                    html += "<![endif]-->";
+
+                    html += "               </td>";
+                    html += "           </tr>";
+                    html += "       </tbody>";
+                    html += "   </table>";
+                    html += "</div>";
+
+                    html += "<!--[if mso | IE]>";
+                    html += "           </td>";
+                    html += "       </tr>";
+                    html += "   </table>";
+                    html += "<![endif]-->";
+
+                    html += "<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#C6E0B4;background-color:#C6E0B4;width:100%;\">";
+                    html += "   <tbody >";
+                    html += "       <tr>";
+                    html += "           <td>";
+                    html += "               < !--[if mso | IE]>";
+                    html += "                   <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" >";
+                    html +="                        <tr>";
+                    html += "                           < td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\">";
+                    html += "               <![endif]-->";
+
+                    html += "               <div style=\"margin:0px auto;max-width:600px;\">";
+                    html += "                   <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\">";
+                    html += "                       <tbody>";
+                    html += "                           <tr>";
+                    html += "                               <td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\">";
+                    html += "                                   <!--[if mso | IE]>";
+                    html += "                                       <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
+                    html += "                                           <tr>";
+                    html += "                                               <td class=\"\" style=\"vertical-align:top;width:300px;\" >";
+                    html += "                                   <![endif]-->";
+                    html += "                                   <div class=\"mj-column-per-50 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\">";
+                    html += "                                       <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\">";
+                    html += "                                           <tr>";
+                    //                                                      UPCOMING THIS WEEK
+                    html += "                                               <td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\">";
+                    html += "                                                   <div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">";
+                    html += "                                                       UPCOMING THIS WEEK";
+                    html += "                                                   </ div>";
+                    html += "                                               </td>";
+                    html += "                                           </tr>";
+                    html += "                   </table>";
+                    html += "               </div>";
+                    html += "               <!--[if mso | IE]>";
+                    html += "                               </td>";
+                    html += "                               <td class=\"\" style=\"vertical-align:top;width:300px;\" >";
+                    html += "               <![endif]-->";
+                    html += "               <div class=\"mj-column-per-50 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\">";
+                    html += "                   <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\">";
+                    html += "                       <tr>";
+                    html += "                           <td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\">";
+                    html += "                               <div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">";
+                    html += "                                   {dateFrom} thru {dateTo}";
+                    html += "                               </div>";
+                    html += "                           </td>";
+                    html += "                       </tr>";
+                    html += "                   </table>";
+                    html += "               </div>";
+                    html += "               <!--[if mso | IE]>";
+                    html += "                           </td>";
+                    html += "                       </tr>";
+                    html += "                   </table>";
+                    html += "               <![endif]-->";
+                    html += "                               </td>";
+                    html += "                           </tr>";
+                    html += "                       </tbody>";
+                    html += "                   </table>";
+                    html += "           </div>";
+                    html += "           <!--[if mso | IE]>";
+                    html += "                               </td>";
+                    html += "                           </tr>";
+                    html += "                       </table>";
+                    html += "           <![endif]-->";
+                    html += "                               </td>";
+                    html += "                           </tr>";
+                    html += "                       </tbody>";
+                    html += "                   </table>";
+
+                    html += "                   <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\">";
+                    html += "                       <tbody>";
+                    html += "                           <tr>";
+                    html += "                               <td>";
+                    html += "                                   <!--[if mso | IE]>";
+                    html += "                                       <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" >";
+                    html += "                                           <tr>";
+                    html += "                                               <td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\">";
+                    html += "                                   <![endif]-->";
+                    html += "                                   <div style=\"margin:0px auto;max-width:600px;\">";
+                    html += "                                       <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\">";
+                    html += "                                           <tbody>";
+                    html += "                                               <tr>";
+                    html += "                                                   <td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\">";
+                    html += "                                                       <!--[if mso | IE]>";
+                    html += "                                                           <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">";
+                    html += "                                                               <tr>";
+                    html += "                                                                   <td class=\"\" style=\"vertical-align:top;width:600px;\" >";
+                    html += "                                                       <![endif]-->";
+                    //                                                              UPCOMING Data Rows
+                    html += "                                                       <div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\">";
+                    html += "                                                           <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\">";
+                    html += "                                                               <tr>";
+                    html += "                                                                   <td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\">";
+                    html += "                                                                       <table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\" style=\"color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;\">";
+                    html += "                                                                           {upcomingTable}";
+                    html += "                                                                   </table>";
+                    html += "                                                       </div>";
+                    html += "                                                       <!--[if mso | IE]>";
+                    html += "                                                                   </td>";
+                    html += "                                                               </tr>";
+                    html += "                                                           </table>";
+                    html += "                                                       <![endif]-->";
+                    html += "                                                   </td>";
+                    html += "                                               </tr>";
+                    html += "                                           </tbody>";
+                    html += "                                       </table>";
+                    html += "                                   </div>";
+                    
+                    //<!--[if mso | IE]>
+                    //</td>
+                    //</tr>
+                    //</table>
+                    //<![endif]-->
+                    //</td>
+                    //</tr>
+                    //</tbody>
+                    //</table>
+                    //<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#FFABAB;background-color:#FFABAB;width:100%;\">
+                    //<tbody>
+                    //<tr>
+                    //<td>
+                    //<!--[if mso | IE]>
+                    //<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" >
+                    //<tr>
+                    //<td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\">
+                    //<![endif]-->
+                    //<div style=\"margin:0px auto;max-width:600px;\">
+                    //<table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\">
+                    //<tbody>
+                    //<tr>
+                    //<td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\">
+                    //<!--[if mso | IE]>
+                    //<table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">
+                    //<tr>
+                    //<td class=\"\" style=\"vertical-align:top;width:600px;\" >
+                    //<![endif]-->
+                    //<div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\">
+                    //<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\">
+                    //<tr>
+                    //<td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\">
+                    //<div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">
+                    //PAST DUE
+                    //</div>
+                    //</td>
+                    //</tr>
+                    //</table>
+                    //</div>
+                    //<!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\" style=\"color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;\">{pastDueTable}</table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div></body></html>";
 
                     var stringBuilderUpcoming = new StringBuilder();
                     var stringBuilderOverdue = new StringBuilder();
 
                     if (listUpcoming.Any())
                     {
+                        // order by date ascending
                         foreach (var text in listUpcoming.OrderBy(x => x.Item2))
                         {
                             stringBuilderUpcoming.Append($"<tr><td width=\"80\">{text.Item1.Cell1}</td><td width=\"40\">{text.Item1.Cell2}</td><td>{text.Item1.Cell3}</td><td>{text.Item1.Cell4}</td><td>{text.Item1.Cell5}</td></tr>");
@@ -247,6 +1123,7 @@ namespace ffcrm.UserEmailService
 
                     if (listOverdue.Any())
                     {
+                        // order by date ascending
                         foreach (var text in listOverdue.OrderBy(x => x.Item2))
                         {
                             stringBuilderOverdue.Append($"<tr><td width=\"80\">{text.Item1.Cell1}</td><td width=\"40\">{text.Item1.Cell2}</td><td>{text.Item1.Cell3}</td><td>{text.Item1.Cell4}</td><td>{text.Item1.Cell5}</td></tr>");
