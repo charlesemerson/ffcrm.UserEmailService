@@ -1,0 +1,153 @@
+﻿<mjml owa="desktop">
+    <mj-head>
+        <mj-title>Weekly CRM Email</mj-title>
+        <mj-breakpoint width="0px" />
+        <mj-style inline="inline">
+            .body {
+            margin: 20px 10px;
+            }
+            .body div {
+            font-size: 16px !important;
+            }
+            .body div, .body th, .body td {
+            color: #212529 !important;
+            }
+            .body td {
+            padding: 0px !important;
+            }
+            .section-head {
+            padding: 10px !important;
+            margin-bottom: 10px !important;
+            }
+            .section-head .text div {
+            font-size: 24px !important;
+            font-weight: bold;
+            }
+            .section-content-head {
+            padding: 10px !important;
+            border-radius: 4px;
+            }
+            .section-content-head .text-title div {
+            font-weight: bold;
+            color: #3E4955 !important;
+            }
+            .section-content {
+            padding: 0px 10px 5px 10px;
+            }
+            .section-content-upcoming {
+            margin-bottom: 20px !important;
+            }
+            .section-content .show-mobile {
+            display: none !important;
+            }
+            .section-content th {
+            text-align: left;
+            }
+            .section-content-data-table {
+            background-color:#eee;
+            border-radius: 0px 0px 4px 4px;
+            }
+            .section-content-data-table table {
+            table-layout: fixed !important;
+            }
+            .section-content-data-table th {
+            line-height: 26px;
+            word-break: normal;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            }
+            .section-content-data-table th, .section-content-data-table td {
+            overflow: hidden;
+            vertical-align: top;
+            padding-right: 20px;
+            }
+            .section-content-data-table th:nth-child(1) {
+            width: 52px;
+            }
+            .section-content-data-table th:nth-child(2) {
+            width: 40px;
+            }
+            .section-content-data-table th:nth-child(3) {
+            width: 68px;
+            }
+            .section-content-data-table th:nth-child(4) {
+            width: 68px;
+            }
+            .section-content-head .text-date-range div {
+            text-align: right !important;
+            }
+        </mj-style>
+        <mj-style>
+            td.data-cell {
+            padding-right: 14px;
+            line-height: 24px;
+            color: #212529;
+            }
+            .show-mobile {
+            display: none;
+            }
+            @media (max-width:480px) {
+            .hide-mobile {
+            display: none !important;
+            }
+            .show-mobile {
+            display: table-cell !important;
+            }
+            }
+        </mj-style>
+        <!-- {addStyles} -->
+    </mj-head>
+    <mj-body css-class="body" width="100%">
+        <mj-section css-class="section-head">
+            <mj-column>
+                <mj-text css-class="text">Weekly CRM Email</mj-text>
+            </mj-column>
+        </mj-section>
+        <mj-section css-class="section-content-head  section-head-upcoming" background-color="#C6E0B4">
+            <mj-column width="50%">
+                <mj-text css-class="text text-title">UPCOMING THIS WEEK</mj-text>
+            </mj-column>
+            <mj-column width="50%">
+                <mj-text css-class="text-date-range">{dateFrom} thru {dateTo}</mj-text>
+            </mj-column>
+        </mj-section>
+        <mj-section css-class="section-content section-content-data-table section-content-upcoming">
+            <mj-column>
+                <mj-table>
+                    <tr>
+                        <th class="show-mobile">Date</th>
+                        <th class="hide-mobile">Day</th>
+                        <th class="hide-mobile">Date</th>
+                        <th class="hide-mobile">Time</th>
+                        <th>Type</th>
+                        <th>Company</th>
+                        <th>Details</th>
+                    </tr>
+                    {upcomingTable}
+                </mj-table>
+            </mj-column>
+        </mj-section>
+        <mj-section css-class="section-content-head section-head-past-due" background-color="#FFABAB">
+            <mj-column>
+                <mj-text css-class="text text-title">PAST DUE</mj-text>
+            </mj-column>
+        </mj-section>
+        <mj-section css-class="section-content section-content-data-table section-content-past-due">
+            <mj-column>
+                <mj-table>
+                    <tr>
+                        <th class="show-mobile">Date</th>
+                        <th class="hide-mobile">Day</th>
+                        <th class="hide-mobile">Date</th>
+                        <th class="hide-mobile">Time</th>
+                        <th>Type</th>
+                        <th>Company</th>
+                        <th>Details</th>
+                    </tr>
+                    {pastDueTable}
+                </mj-table>
+            </mj-column>
+        </mj-section>
+    </mj-body>
+</mjml>

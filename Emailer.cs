@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace ffcrm.UserEmailService
 {
@@ -33,7 +34,7 @@ namespace ffcrm.UserEmailService
                 var listOverdue = new List<Tuple<GridItem, DateTime>>();
 
                 var globalDealIds = GetGlobalDealIdsForGlobalUser(globalUser.GlobalUserId, globalUser.DataCenter);
-
+                
                 var proposalsUpcoming = GetProposals(dateFrom, dateTo, globalDealIds, globalUser.DataCenter);
                 var contractsUpcoming = GetContracts(dateFrom, dateTo, globalDealIds, globalUser.DataCenter);
                 var decisionsUpcoming = GetDecisions(dateFrom, dateTo, globalDealIds, globalUser.DataCenter);
@@ -52,10 +53,13 @@ namespace ffcrm.UserEmailService
                     {
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{proposal.DateProposalDue.Value:ddd dd-MMM-yy}",
-                            Cell3 = "Proposal Due",
-                            Cell4 = proposal.CompanyName,
-                            Cell5 = proposal.DealName
+                            CellMobileDate = $"{proposal.DateProposalDue.Value:dd-MMM-yy}<br/>{proposal.DateProposalDue.Value:hh:mm tt}",
+                            CellDay = $"{proposal.DateProposalDue.Value:ddd}",
+                            CellDate = $"{proposal.DateProposalDue.Value:dd-MMM-yy}",
+                            CellTime = $"{proposal.DateProposalDue.Value:hh:mm tt}",
+                            CellType = "Proposal Due",
+                            CellCompany = proposal.CompanyName,
+                            CellDetails = proposal.DealName
                         }, proposal.DateProposalDue.Value));
                     }
                 }
@@ -66,10 +70,13 @@ namespace ffcrm.UserEmailService
                     {
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{contract.ContractEndDate.Value:ddd dd-MMM-yy}",
-                            Cell3 = "Contract Ending",
-                            Cell4 = contract.CompanyName,
-                            Cell5 = contract.DealName
+                            CellMobileDate = $"{contract.ContractEndDate.Value:dd-MMM-yy}<br/>{contract.ContractEndDate.Value:hh:mm tt}",
+                            CellDay = $"{contract.ContractEndDate.Value:ddd}",
+                            CellDate = $"{contract.ContractEndDate.Value:dd-MMM-yy}",
+                            CellTime = $"{contract.ContractEndDate.Value:hh:mm tt}",
+                            CellType = "Contract Ending",
+                            CellCompany = contract.CompanyName,
+                            CellDetails = contract.DealName
                         }, contract.ContractEndDate.Value));
                     }
                 }
@@ -80,10 +87,13 @@ namespace ffcrm.UserEmailService
                     {
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{decision.DecisionDate.Value:ddd dd-MMM-yy}",
-                            Cell3 = "Decision Due",
-                            Cell4 = decision.CompanyName,
-                            Cell5 = decision.DealName
+                            CellMobileDate = $"{decision.DecisionDate.Value:dd-MMM-yy}<br/>{decision.DecisionDate.Value:hh:mm tt}",
+                            CellDay = $"{decision.DecisionDate.Value:ddd}",
+                            CellDate = $"{decision.DecisionDate.Value:dd-MMM-yy}",
+                            CellTime = $"{decision.DecisionDate.Value:hh:mm tt}",
+                            CellType = "Decision Due",
+                            CellCompany = decision.CompanyName,
+                            CellDetails = decision.DealName
                         }, decision.DecisionDate.Value));
                     }
                 }
@@ -103,11 +113,13 @@ namespace ffcrm.UserEmailService
 
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{activity.ActivityDate:ddd dd-MMM-yy}",
-                            Cell2 = $"{activity.ActivityDate:HH:mm}",
-                            Cell3 = activity.CategoryName,
-                            Cell4 = activity.CompanyName,
-                            Cell5 = $"{activity.ContactNames} {deal}"
+                            CellMobileDate = $"{activity.ActivityDate:dd-MMM-yy}<br/>{activity.ActivityDate:hh:mm tt}",
+                            CellDay = $"{activity.ActivityDate:ddd}",
+                            CellDate = $"{activity.ActivityDate:dd-MMM-yy}",
+                            CellTime = $"{activity.ActivityDate:hh:mm tt}",
+                            CellType = activity.CategoryName,
+                            CellCompany = activity.CompanyName,
+                            CellDetails = $"{activity.ContactNames} {deal}"
                         }, activity.ActivityDate));
                     }
                 }
@@ -123,10 +135,13 @@ namespace ffcrm.UserEmailService
 
                         listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            Cell1 = $"{task.DueDate.Value:ddd dd-MMM-yy}",
-                            Cell3 = "Task Due",
-                            Cell4 = task.CompanyName,
-                            Cell5 = $"{dealName}{task.TaskName}",
+                            CellMobileDate = $"{task.DueDate.Value:dd-MMM-yy}<br/>{task.DueDate.Value:hh:mm tt}",
+                            CellDay = $"{task.DueDate.Value:ddd}",
+                            CellDate = $"{task.DueDate.Value:dd-MMM-yy}",
+                            CellTime = $"{task.DueDate.Value:hh:mm tt}",
+                            CellType = "Task Due",
+                            CellCompany = task.CompanyName,
+                            CellDetails = $"{dealName}{task.TaskName}",
                         }, task.DueDate.Value));
                     }
                 }
@@ -148,10 +163,13 @@ namespace ffcrm.UserEmailService
 
                             listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{birthdayDate:ddd dd-MMM-yy}",
-                                Cell3 = "Birthday",
-                                Cell4 = birthday.CompanyName,
-                                Cell5 = birthday.ContactName,
+                                CellMobileDate = $"{birthdayDate:dd-MMM-yy}<br/>{birthdayDate:hh:mm tt}",
+                                CellDay = $"{birthdayDate:ddd}",
+                                CellDate = $"{birthdayDate:dd-MMM-yy}",
+                                CellTime = $"{birthdayDate:hh:mm tt}",
+                                CellType = "Birthday",
+                                CellCompany = birthday.CompanyName,
+                                CellDetails = birthday.ContactName,
                             }, birthdayDate));
                         }
                     }
@@ -165,10 +183,13 @@ namespace ffcrm.UserEmailService
                         {
                             listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{proposal.DateProposalDue.Value:ddd dd-MMM-yy}",
-                                Cell3 = "Proposal Past Due",
-                                Cell4 = proposal.CompanyName,
-                                Cell5 = proposal.DealName,
+                                CellMobileDate = $"{proposal.DateProposalDue.Value:dd-MMM-yy}<br/>{proposal.DateProposalDue.Value:hh:mm tt}",
+                                CellDay = $"{proposal.DateProposalDue.Value:ddd}",
+                                CellDate = $"{proposal.DateProposalDue.Value:dd-MMM-yy}",
+                                CellTime = $"{proposal.DateProposalDue.Value:hh:mm tt}",
+                                CellType = "Proposal Past Due",
+                                CellCompany = proposal.CompanyName,
+                                CellDetails = proposal.DealName,
                             }, proposal.DateProposalDue.Value));
                         }
                     }
@@ -182,10 +203,13 @@ namespace ffcrm.UserEmailService
                         {
                             listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{contract.ContractEndDate.Value:ddd dd-MMM-yy}",
-                                Cell3 = "Contract Past Due",
-                                Cell4 = contract.CompanyName,
-                                Cell5 = contract.DealName,
+                                CellMobileDate = $"{contract.ContractEndDate.Value:dd-MMM-yy}<br/>{contract.ContractEndDate.Value:hh:mm tt}",
+                                CellDay = $"{contract.ContractEndDate.Value:ddd}",
+                                CellDate = $"{contract.ContractEndDate.Value:dd-MMM-yy}",
+                                CellTime = $"{contract.ContractEndDate.Value:hh:mm tt}",
+                                CellType = "Contract Past Due",
+                                CellCompany = contract.CompanyName,
+                                CellDetails = contract.DealName,
                             }, contract.ContractEndDate.Value));
                         }
                     }
@@ -199,10 +223,13 @@ namespace ffcrm.UserEmailService
                         {
                             listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{decision.DecisionDate.Value:ddd dd-MMM-yy}",
-                                Cell3 = "Decision Past Due",
-                                Cell4 = decision.CompanyName,
-                                Cell5 = decision.DealName,
+                                CellMobileDate = $"{decision.DecisionDate.Value:dd-MMM-yy}<br/>{decision.DecisionDate.Value:hh:mm tt}",
+                                CellDay = $"{decision.DecisionDate.Value:ddd}",
+                                CellDate = $"{decision.DecisionDate.Value:dd-MMM-yy}",
+                                CellTime = $"{decision.DecisionDate.Value:hh:mm tt}",
+                                CellType = "Decision Past Due",
+                                CellCompany = decision.CompanyName,
+                                CellDetails = decision.DealName,
                             }, decision.DecisionDate.Value));
                         }
                     }
@@ -221,10 +248,13 @@ namespace ffcrm.UserEmailService
 
                             listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                Cell1 = $"{task.DueDate.Value:ddd dd-MMM-yy}",
-                                Cell3 = "Task Past Due",
-                                Cell4 = task.CompanyName,
-                                Cell5 = $"{dealName}{task.TaskName}",
+                                CellMobileDate = $"{task.DueDate.Value:dd-MMM-yy}<br/>{task.DueDate.Value:hh:mm tt}",
+                                CellDay = $"{task.DueDate.Value:ddd}",
+                                CellDate = $"{task.DueDate.Value:dd-MMM-yy}",
+                                CellTime = $"{task.DueDate.Value:hh:mm tt}",
+                                CellType = "Task Past Due",
+                                CellCompany = task.CompanyName,
+                                CellDetails = $"{dealName}{task.TaskName}",
                             }, task.DueDate.Value));
                         }
                     }
@@ -232,8 +262,8 @@ namespace ffcrm.UserEmailService
 
                 if (listUpcoming.Any() || listOverdue.Any())
                 {
-                    var html = "<!doctype html><html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><head><title></title><!--[if !mso]><!-- --><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><!--<![endif]--><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style type=\"text/css\">#outlook a { padding:0; } body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%; } table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt; } img { border:0;height:auto;line-height:100%; outline:none;text-decoration:none;-ms-interpolation-mode:bicubic; } p { display:block;margin:13px 0; }</style><!--[if mso]> <xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml> <![endif]--><!--[if lte mso 11]> <style type=\"text/css\"> .mj-outlook-group-fix { width:100% !important; } </style> <![endif]--><!--[if !mso]><!--><link href=\"https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700\" rel=\"stylesheet\" type=\"text/css\"><style type=\"text/css\">@import url(https://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700);</style><!--<![endif]--><style type=\"text/css\">@media only screen and (min-width:480px) { .mj-column-per-100 { width:100% !important; max-width: 100%; } .mj-column-per-50 { width:50% !important; max-width: 50%; } }</style><style type=\"text/css\"></style></head><body><div><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">Weekly CRM Email</div></td></tr></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#C6E0B4;background-color:#C6E0B4;width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:300px;\" ><![endif]--><div class=\"mj-column-per-50 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">UPCOMING THIS WEEK</div></td></tr></table></div><!--[if mso | IE]></td><td class=\"\" style=\"vertical-align:top;width:300px;\" ><![endif]--><div class=\"mj-column-per-50 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">{dateFrom} thru {dateTo}</div></td></tr></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\" style=\"color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;\">{upcomingTable}</table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#FFABAB;background-color:#FFABAB;width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><div style=\"font-family:helvetica;font-size:20px;font-weight:bold;line-height:1;text-align:left;color:#000000;\">PAST DUE</div></td></tr></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"vertical-align:top;\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" border=\"0\" style=\"color:#000000;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:22px;table-layout:auto;width:100%;border:none;\">{pastDueTable}</table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div></body></html>";
-
+                    var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Templates\\WeeklyCRM\\email.html");
+                    var html = File.ReadAllText(path);
                     var stringBuilderUpcoming = new StringBuilder();
                     var stringBuilderOverdue = new StringBuilder();
 
@@ -241,7 +271,15 @@ namespace ffcrm.UserEmailService
                     {
                         foreach (var text in listUpcoming.OrderBy(x => x.Item2))
                         {
-                            stringBuilderUpcoming.Append($"<tr><td width=\"80\">{text.Item1.Cell1}</td><td width=\"40\">{text.Item1.Cell2}</td><td>{text.Item1.Cell3}</td><td>{text.Item1.Cell4}</td><td>{text.Item1.Cell5}</td></tr>");
+                            stringBuilderUpcoming.Append("<tr>" +
+                                $"<td class=\"data-cell show-mobile\">{text.Item1.CellMobileDate}</td>" +
+                                $"<td class=\"data-cell hide-mobile\">{text.Item1.CellDay}</td>" +
+                                $"<td class=\"data-cell hide-mobile\">{text.Item1.CellDate}</td>" +
+                                $"<td class=\"data-cell hide-mobile\">{text.Item1.CellTime}</td>" +
+                                $"<td class=\"data-cell\">{text.Item1.CellType}</td>" +
+                                $"<td class=\"data-cell\">{text.Item1.CellCompany}</td>" +
+                                $"<td class=\"data-cell\">{text.Item1.CellDetails}</td>" +
+                             "</tr>");
                         }
                     }
 
@@ -249,7 +287,15 @@ namespace ffcrm.UserEmailService
                     {
                         foreach (var text in listOverdue.OrderBy(x => x.Item2))
                         {
-                            stringBuilderOverdue.Append($"<tr><td width=\"80\">{text.Item1.Cell1}</td><td width=\"40\">{text.Item1.Cell2}</td><td>{text.Item1.Cell3}</td><td>{text.Item1.Cell4}</td><td>{text.Item1.Cell5}</td></tr>");
+                            stringBuilderOverdue.Append($"<tr>" +
+                                $"<td class=\"data-cell show-mobile\">{text.Item1.CellMobileDate}</td>" +
+                                $"<td class=\"data-cell hide-mobile\">{text.Item1.CellDay}</td>" +
+                                $"<td class=\"data-cell hide-mobile\">{text.Item1.CellDate}</td>" +
+                                $"<td class=\"data-cell hide-mobile\">{text.Item1.CellTime}</td>" +
+                                $"<td class=\"data-cell\">{text.Item1.CellType}</td>" +
+                                $"<td class=\"data-cell\">{text.Item1.CellCompany}</td>" +
+                                $"<td class=\"data-cell\">{text.Item1.CellDetails}</td>" +
+                            "</tr>");
                         }
                     }
 
@@ -257,6 +303,14 @@ namespace ffcrm.UserEmailService
                     html = html.Replace("{dateTo}", $"{dateTo:ddd, dd-MMM-yy}");
                     html = html.Replace("{upcomingTable}", stringBuilderUpcoming.ToString());
                     html = html.Replace("{pastDueTable}", stringBuilderOverdue.ToString());
+
+                    if (!listUpcoming.Any() || !listOverdue.Any()) {
+                        var addStyles = "<style>";
+                        if (!listUpcoming.Any()) addStyles += ".section-content-upcoming, .section-head-upcoming{display:none !important;}";
+                        if (!listOverdue.Any()) addStyles += ".section-content-past-due, .section-head-past-due{display:none !important;}";
+                        addStyles += "</style>";
+                        html = html.Replace("<!-- {addStyles} -->", addStyles);
+                    }
 
                     SendEmail(html, globalUser.EmailAddress, globalUser.DataCenter);
                 }
