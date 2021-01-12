@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title> Weekly CRM Email </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body style="margin: 20px; font-size: 16px; color: #212529; font-family: Ubuntu, Helvetica, Arial, sans-serif; text-align: left;">
+
+    <table role="presentation" border="0" cellpadding="10" cellspacing="0" width="100%">
+        <tr>
+            <td width="100%" style="font-weight: bold; font-size: 24px;">Weekly CRM Email</td>
+            <td align="right" style="text-align: right; vertical-align: top;">
+                <table role="presentation" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td align="right" style="border-radius: 3px;" bgcolor="#219bf8"><a href="https://crm.firstfreight.com/Login.aspx" target="_blank" style="font-size:  15px; font-family: Arial; color: #ffffff; text-decoration: none; font-weight: bold; padding: 10px 20px; border-radius: 2px; border: 1px solid #219bf8; display: inline-block;">Login...</a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    
+    <table role="presentation" border="0" cellpadding="10" cellspacing="0" width="100%" style="{tableStyles1-upcoming}">
+        <tr style="background-color: #C6E0B4; border-radius: 4px 4px 0px 0px;">
+            <td style="width: 50%; font-weight: bold;">UPCOMING THIS WEEK</td>
+            <td style="width: 50%; text-align: right;">{dateFrom} thru {dateTo}</td>
+        </tr>
+    </table>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #eee;{tableStyles2-upcoming}">
+        <tr>
+            <th style="font-size: 13px; line-height: normal; width: 34px; padding: 6px 10px 6px 10px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Day</th>
+            <th style="font-size: 13px; line-height: normal; width: 70px; padding: 6px 10px 6px 0px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Date</th>
+            <th style="font-size: 13px; line-height: normal; padding: 6px 10px 6px 0px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Type</th>
+            <th style="font-size: 13px; line-height: normal; padding: 6px 10px 6px 0px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Company</th>
+            <th style="font-size: 13px; line-height: normal; padding: 6px 10px 6px 0px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Details</th>
+        </tr>
+        {upcomingTable}
+    </table>
+    {tablesVerticalSpacer}
+
+    <table role="presentation" border="0" cellpadding="10" cellspacing="0" width="100%" style="{tableStyles1-pastDue}">
+        <tr style="background-color: #FFABAB; border-radius: 4px 4px 0px 0px;">
+            <td style="width: 50%; font-weight: bold;">PAST DUE</td>
+        </tr>
+    </table>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #eee;{tableStyles2-pastDue}">
+        <tr>
+            <th style="font-size: 13px; line-height: normal; width: 34px; padding: 6px 10px 6px 10px; padding-right: 10px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Day</th>
+            <th style="font-size: 13px; line-height: normal; width: 70px; padding: 6px 10px 6px 0px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Date</th>
+            <th style="font-size: 13px; line-height: normal; padding: 6px 10px 6px 0px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Type</th>
+            <th style="font-size: 13px; line-height: normal; padding: 6px 10px 6px 0px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Company</th>
+            <th style="font-size: 13px; line-height: normal; padding: 6px 10px 6px 0px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; vertical-align: top; text-align: left;">Details</th>
+        </tr>
+        {pastDueTable}
+    </table>
+
+</body>
+</html>
