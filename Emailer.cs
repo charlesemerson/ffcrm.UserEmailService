@@ -25,7 +25,7 @@ namespace ffcrm.UserEmailService
             var dateTo = new DateTime(nextSaturday.Year, nextSaturday.Month, nextSaturday.Day, 23, 59, 59);
           
             var sharedDb = new DbSharedDataContext(Utils.GetSharedConnection());
-            var activeSubscriberIds = sharedDb.Subscribers.Where(t => !t.Deleted && t.Active).Select(t => t.SubscriberId).ToList();
+            var activeSubscriberIds = sharedDb.Subscribers.Where(t => !t.Deleted && t.Active && t.SubscriberId != 0 && t.SubscriberId != 100).Select(t => t.SubscriberId).ToList();
 
             var loginDb = new DbLoginDataContext(Utils.GetLoginConnection());
 
@@ -424,9 +424,9 @@ namespace ffcrm.UserEmailService
                 Subject = "FirstFreight Weekly Digest",
                 HtmlBody = html,
                 OtherRecipients = new List<Recipient> {
-                        new Recipient{
-                            EmailAddress = toEmail
-                        },
+                      //  new Recipient{  EmailAddress = toEmail  },
+                      new Recipient{  EmailAddress = "charles@firstfreight.com"  },
+                      new Recipient{  EmailAddress = "devseff01@gmail.com"  },
                         // send copy of email to archive + dev
                         new Recipient{EmailAddress = "sendgrid@firstfreight.com" },
                     }
