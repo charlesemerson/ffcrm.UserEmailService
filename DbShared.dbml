@@ -1041,4 +1041,63 @@
       <Column Name="UserRole" Member="UserRole1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.Subscribers" Member="Subscribers">
+    <Type Name="Subscriber">
+      <Column Name="SubscriberId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Active" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Billable" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="BillingCurrencyCode" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Column Name="BillingCurrencySymbol" Type="System.String" DbType="NVarChar(2)" CanBeNull="true" />
+      <Column Name="BillingUserRate" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="BillingUserReadOnlyRate" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CompanyName" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="ContactName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="CountryName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedUserIdGlobal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreatedUserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CrmAdminEmail" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DataCenter" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Deleted" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DeletedDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DeletedUserIdGlobal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DeletedUserName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DefaultDateFormat" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultLeadResponseDays" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultReportCurrencyCode" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultReportDateFormat" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DefaultShippingFrequency" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="EmailDisclaimer" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="EmailFrom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ExchangeDomain" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ExchangeServerTimeZone" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="ExchangeUrl" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastUpdate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LogonUrl" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Phone" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="PostalCode" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="SsoApiKey" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="StateProvince" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SubDomain" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SubscriberApiKey" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="SubscriberIpAddress" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SyncType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SyncServiceDomain" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SyncServicePassword" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="SyncServiceUrl" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="SyncServiceUserName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UpdateUserIdGlobal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UpdateUserName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UserLimit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FreeTrial" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="SubscriberGuid" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="AirVolumeDisplay" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CompanyCodeText" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="CompanyParentCodeText" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

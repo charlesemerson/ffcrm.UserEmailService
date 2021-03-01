@@ -254,5 +254,11 @@
         <elementListCompartment Id="5a94eb02-f344-437b-992c-96a753cc7855" absoluteBounds="27.765, 16.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="dedcbdea-0977-4b1f-8d23-8a878cad47e4" isExpanded="false" absoluteBounds="3.75, 4.125, 2, 0.45">
+      <DataClassMoniker Name="/DbSharedDataContext/Subscriber" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c836ead8-2e6f-4828-a56b-351f789b6ff8" absoluteBounds="3.765, 4.585, 1.9700000000000002, 10.825968424479166" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

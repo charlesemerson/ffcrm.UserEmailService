@@ -22,11 +22,14 @@ namespace ffcrm.UserEmailService
 
             //Date to is next Saturday at 23:59:59 (UTC).
             var dateTo = new DateTime(nextSaturday.Year, nextSaturday.Month, nextSaturday.Day, 23, 59, 59);
+          
+            var sharedDb = new DbSharedDataContext(Utils.GetSharedConnection());
+            var activeSubscriberIds = sharedDb.Subscribers.Where(t => !t.Deleted && t.Active).Select(t => t.SubscriberId).ToList();
 
             var loginDb = new DbLoginDataContext(Utils.GetLoginConnection());
 
-            //var globalUsers = loginDb.GlobalUsers.Where(x => x.EmailDigest.ToLower() == "weekly").OrderBy(x => x.FullName);
-            var globalUsers = loginDb.GlobalUsers.OrderBy(x => x.FullName);
+            //var globalUsers = loginDb.GlobalUsers.Where(x => t.LoginEnabled && !t.Deleted && x.EmailDigest.ToLower() == "weekly").OrderBy(x => x.FullName);
+            var globalUsers = loginDb.GlobalUsers.Where(t=> activeSubscriberIds.Contains(t.SubscriberId) && t.LoginEnabled && !t.Deleted).OrderBy(x => x.FullName).ToList();
 
             foreach (var globalUser in globalUsers)
             {
@@ -329,7 +332,7 @@ namespace ffcrm.UserEmailService
 
         private List<int> GetGlobalDealIdsForGlobalUser(int globalUserId, string dataCenter)
         {
-            var sharedContext = new DbSharedDataContext(Utils.GetSharedConnection(dataCenter));
+            var sharedContext = new DbSharedDataContext(Utils.GetSharedConnectionForDataCenter(dataCenter));
             var globalDealIds = sharedContext.LinkGlobalDealGlobalUsers.Where(x => x.GlobalUserId == globalUserId).Select(x => x.GlobalDealId);
 
             if (globalDealIds != null && globalDealIds.Any())
@@ -342,7 +345,7 @@ namespace ffcrm.UserEmailService
 
         private List<GlobalDeal> GetProposals(DateTime dateFrom, DateTime dateTo, List<int> globalDealIds, string dataCenter)
         {
-            var sharedContext = new DbSharedDataContext(Utils.GetSharedConnection(dataCenter));
+            var sharedContext = new DbSharedDataContext(Utils.GetSharedConnectionForDataCenter(dataCenter));
             var globalDeals = sharedContext.GlobalDeals.Where(x => globalDealIds.Contains(x.DealIdGlobal) && !x.Deleted && x.DateProposalDue >= dateFrom && x.DateProposalDue <= dateTo);
 
             if (globalDeals != null && globalDeals.Any())
@@ -442,11 +445,11 @@ namespace ffcrm.UserEmailService
                 Subject = "FirstFreight Weekly Digest",
                 HtmlBody = html,
                 OtherRecipients = new List<Recipient> {
-                        new Recipient{
-                            EmailAddress = toEmail
-                        },
+                      //  new Recipient{  EmailAddress = toEmail  },
+                  //    new Recipient{  EmailAddress = "charles@firstfreight.com"  },
+                      new Recipient{  EmailAddress = "devseff01@gmail.com"  },
                         // send copy of email to archive + dev
-                        new Recipient{EmailAddress = "sendgrid@firstfreight.com" },
+                     //  new Recipient{EmailAddress = "sendgrid@firstfreight.com" },
                     }
             };
 
