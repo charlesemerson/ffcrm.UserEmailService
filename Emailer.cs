@@ -3,9 +3,10 @@ using ffcrm.UserEmailService.Login;
 using ffcrm.UserEmailService.Models;
 using ffcrm.UserEmailService.Shared;
 using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace ffcrm.UserEmailService
 {
@@ -33,15 +34,15 @@ namespace ffcrm.UserEmailService
 
             foreach (var globalUser in globalUsers)
             {
-                var listUpcoming = new List<Tuple<string, DateTime>>();
-                var listOverdue = new List<Tuple<string, DateTime>>();
+                var listUpcoming = new List<Tuple<GridItem, DateTime>>();
+                var listOverdue = new List<Tuple<GridItem, DateTime>>();
 
                 var globalDealIds = GetGlobalDealIdsForGlobalUser(globalUser.GlobalUserId, globalUser.DataCenter);
 
                 var proposalsUpcoming = GetProposals(dateFrom, dateTo, globalDealIds, globalUser.DataCenter);
                 var contractsUpcoming = GetContracts(dateFrom, dateTo, globalDealIds, globalUser.DataCenter);
                 var decisionsUpcoming = GetDecisions(dateFrom, dateTo, globalDealIds, globalUser.DataCenter);
-                var activitiesUpcoming = GetActivities(dateFrom, dateTo, globalUser.GlobalUserId, globalUser.DataCenter);
+                var eventsUpcoming = GetEvents(dateFrom, dateTo, globalUser.GlobalUserId, globalUser.DataCenter);
                 var tasksUpcoming = GetTasks(dateFrom, dateTo, globalUser.GlobalUserId, globalUser.DataCenter);
                 var birthdaysUpcoming = GetBirthdays(dateFrom, dateTo, globalUser.UserId, globalUser.DataCenter);
 
@@ -54,19 +55,15 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var proposal in proposalsUpcoming)
                     {
-                        if (!string.IsNullOrWhiteSpace(proposal.DealName))
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(proposal.CompanyName))
-                            {
-                                company = $"| Company: {proposal.CompanyName}";
-                            }
-
-                            var text = $"{proposal.DateProposalDue.Value:ddd, dd-MMM-yy} - Proposal Due for: {proposal.DealName} {company}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, proposal.DateProposalDue.Value));
-                        }
+                            CellMobileDate = $"{proposal.DateProposalDue.Value:dd-MMM-yy}",
+                            CellDay = $"{proposal.DateProposalDue.Value:ddd}",
+                            CellDate = $"{proposal.DateProposalDue.Value:dd-MMM-yy}",
+                            CellType = "Proposal Due",
+                            CellCompany = proposal.CompanyName,
+                            CellDetails = proposal.DealName
+                        }, proposal.DateProposalDue.Value));
                     }
                 }
 
@@ -74,19 +71,15 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var contract in contractsUpcoming)
                     {
-                        if (!string.IsNullOrWhiteSpace(contract.DealName))
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(contract.CompanyName))
-                            {
-                                company = $"| Company: {contract.CompanyName}";
-                            }
-
-                            var text = $"{contract.ContractEndDate.Value:ddd, dd-MMM-yy} - Contract ending for: {contract.DealName} {company}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, contract.ContractEndDate.Value));
-                        }
+                            CellMobileDate = $"{contract.ContractEndDate.Value:dd-MMM-yy}",
+                            CellDay = $"{contract.ContractEndDate.Value:ddd}",
+                            CellDate = $"{contract.ContractEndDate.Value:dd-MMM-yy}",
+                            CellType = "Contract Ending",
+                            CellCompany = contract.CompanyName,
+                            CellDetails = contract.DealName
+                        }, contract.ContractEndDate.Value));
                     }
                 }
 
@@ -94,47 +87,35 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var decision in decisionsUpcoming)
                     {
-                        if (!string.IsNullOrWhiteSpace(decision.DealName))
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(decision.CompanyName))
-                            {
-                                company = $"| Company: {decision.CompanyName}";
-                            }
-
-                            var text = $"{decision.DecisionDate.Value:ddd, dd-MMM-yy} - Decision Due for: {decision.DealName} {company}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, decision.DecisionDate.Value));
-                        }
+                            CellMobileDate = $"{decision.DecisionDate.Value:dd-MMM-yy}",
+                            CellDay = $"{decision.DecisionDate.Value:ddd}",
+                            CellDate = $"{decision.DecisionDate.Value:dd-MMM-yy}",
+                            CellType = "Decision Due",
+                            CellCompany = decision.CompanyName,
+                            CellDetails = decision.DealName
+                        }, decision.DecisionDate.Value));
                     }
                 }
 
-                if (activitiesUpcoming != null && activitiesUpcoming.Any())
+                if (eventsUpcoming != null && eventsUpcoming.Any())
                 {
-                    foreach (var activity in activitiesUpcoming)
+                    foreach (var activity in eventsUpcoming)
                     {
-                        if (!string.IsNullOrWhiteSpace(activity.ContactNames))
+                        var deal = "";
+                        var dealName = GetDealNameFromActivity(globalUser.DataCenter, activity.ActivityId);
+                        string time = activity.IsAllDay ? "" : activity.StartDateTime.Value.ToString("hh:mm tt");
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            var company = "";
-                            var deal = "";
-
-                            if (!string.IsNullOrWhiteSpace(activity.CompanyName))
-                            {
-                                company = $"| Company: {activity.CompanyName}";
-                            }
-
-                            var dealName = GetDealNameFromActivity(globalUser.DataCenter, activity.ActivityId);
-
-                            if (!string.IsNullOrWhiteSpace(dealName))
-                            {
-                                deal = $"| Deal: {dealName}";
-                            }
-
-                            var text = $"{activity.ActivityDate:ddd, dd-MMM-yy HH:mm} - External Meeting with: {activity.ContactNames} {company} {deal}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, activity.ActivityDate));
-                        }
+                            CellMobileDate = $"{activity.ActivityDate:dd-MMM-yy}<br/>{activity.ActivityDate:hh:mm tt}",
+                            CellDay = $"{activity.ActivityDate:ddd}",
+                            CellDate = $"{activity.ActivityDate:dd-MMM-yy}",
+                            CellTime = $"{time}",
+                            CellType = activity.CategoryName,
+                            CellCompany = activity.CompanyName,
+                            CellDetails = $"{activity.ContactNames}{(string.IsNullOrEmpty(activity.ContactNames) || string.IsNullOrEmpty(dealName) ? "" : " | ") + deal}"
+                        }, activity.ActivityDate));
                     }
                 }
 
@@ -142,27 +123,16 @@ namespace ffcrm.UserEmailService
                 {
                     foreach (var task in tasksUpcoming)
                     {
-                        if (!string.IsNullOrWhiteSpace(task.TaskName))
+                        var dealName = GetDealNameFromActivity(globalUser.DataCenter, task.ActivityId);
+                        listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
                         {
-                            var company = "";
-                            var deal = "";
-
-                            if (!string.IsNullOrWhiteSpace(task.CompanyName))
-                            {
-                                company = $"| Company: {task.CompanyName}";
-                            }
-
-                            var dealName = GetDealNameFromActivity(globalUser.DataCenter, task.ActivityId);
-
-                            if (!string.IsNullOrWhiteSpace(dealName))
-                            {
-                                deal = $"| Deal: {dealName}";
-                            }
-
-                            var text = $"{task.DueDate.Value:ddd, dd-MMM-yy} - Task Due: {task.TaskName} {company} {deal}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, task.DueDate.Value));
-                        }
+                            CellMobileDate = $"{task.DueDate.Value:dd-MMM-yy}",
+                            CellDay = $"{task.DueDate.Value:ddd}",
+                            CellDate = $"{task.DueDate.Value:dd-MMM-yy}",
+                            CellType = "Task Due",
+                            CellCompany = task.CompanyName,
+                            CellDetails = $"{dealName}{(string.IsNullOrEmpty(dealName) || string.IsNullOrEmpty(task.TaskName) ? "" : " | " ) + task.TaskName}",
+                        }, task.DueDate.Value));
                     }
                 }
 
@@ -172,25 +142,19 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(birthday.ContactName))
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(birthday.CompanyName))
-                            {
-                                company = $"| Company: {birthday.CompanyName}";
-                            }
-
                             var birthdayYear = dateFrom.Year;
-
-                            if (birthday.BirthdayMonth == dateTo.Month)
-                            {
-                                birthdayYear = dateTo.Year;
-                            }
-
+                            if (birthday.BirthdayMonth == dateTo.Month) birthdayYear = dateTo.Year;
                             var birthdayDate = new DateTime(birthdayYear, birthday.BirthdayMonth, birthday.BirthdayDay);
 
-                            var text = $"{birthdayDate:ddd, dd-MMM-yy} - Birthday for: {birthday.ContactName} {company}";
-
-                            listUpcoming.Add(new Tuple<string, DateTime>(text, birthdayDate));
+                            listUpcoming.Add(new Tuple<GridItem, DateTime>(new GridItem
+                            {
+                                CellMobileDate = $"{birthdayDate:dd-MMM-yy}",
+                                CellDay = $"{birthdayDate:ddd}",
+                                CellDate = $"{birthdayDate:dd-MMM-yy}",
+                                CellType = "Birthday",
+                                CellCompany = birthday.CompanyName,
+                                CellDetails = birthday.ContactName,
+                            }, birthdayDate));
                         }
                     }
                 }
@@ -201,16 +165,15 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(proposal.DealName))
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(proposal.CompanyName))
+                            listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                company = $"| Company: {proposal.CompanyName}";
-                            }
-
-                            var text = $"{proposal.DateProposalDue.Value:ddd, dd-MMM-yy} - Proposal Past Due for: {proposal.DealName} {company}";
-
-                            listOverdue.Add(new Tuple<string, DateTime>(text, proposal.DateProposalDue.Value));
+                                CellMobileDate = $"{proposal.DateProposalDue.Value:dd-MMM-yy}",
+                                CellDay = $"{proposal.DateProposalDue.Value:ddd}",
+                                CellDate = $"{proposal.DateProposalDue.Value:dd-MMM-yy}",
+                                CellType = "Proposal Past Due",
+                                CellCompany = proposal.CompanyName,
+                                CellDetails = proposal.DealName,
+                            }, proposal.DateProposalDue.Value));
                         }
                     }
                 }
@@ -221,16 +184,15 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(contract.DealName))
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(contract.CompanyName))
+                            listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                company = $"| Company: {contract.CompanyName}";
-                            }
-
-                            var text = $"{contract.ContractEndDate.Value:ddd, dd-MMM-yy} - Contract Ended for: {contract.DealName} {company}";
-
-                            listOverdue.Add(new Tuple<string, DateTime>(text, contract.ContractEndDate.Value));
+                                CellMobileDate = $"{contract.ContractEndDate.Value:dd-MMM-yy}",
+                                CellDay = $"{contract.ContractEndDate.Value:ddd}",
+                                CellDate = $"{contract.ContractEndDate.Value:dd-MMM-yy}",
+                                CellType = "Contract Past Due",
+                                CellCompany = contract.CompanyName,
+                                CellDetails = contract.DealName,
+                            }, contract.ContractEndDate.Value));
                         }
                     }
                 }
@@ -241,16 +203,15 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(decision.DealName))
                         {
-                            var company = "";
-
-                            if (!string.IsNullOrWhiteSpace(decision.CompanyName))
+                            listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                company = $"| Company: {decision.CompanyName}";
-                            }
-
-                            var text = $"{decision.DecisionDate.Value:ddd, dd-MMM-yy} - Decision Past Due for: {decision.DealName} {company}";
-
-                            listOverdue.Add(new Tuple<string, DateTime>(text, decision.DecisionDate.Value));
+                                CellMobileDate = $"{decision.DecisionDate.Value:dd-MMM-yy}",
+                                CellDay = $"{decision.DecisionDate.Value:ddd}",
+                                CellDate = $"{decision.DecisionDate.Value:dd-MMM-yy}",
+                                CellType = "Decision Past Due",
+                                CellCompany = decision.CompanyName,
+                                CellDetails = decision.DealName,
+                            }, decision.DecisionDate.Value));
                         }
                     }
                 }
@@ -261,55 +222,73 @@ namespace ffcrm.UserEmailService
                     {
                         if (!string.IsNullOrWhiteSpace(task.TaskName))
                         {
-                            var company = "";
-                            var deal = "";
-
-                            if (!string.IsNullOrWhiteSpace(task.CompanyName))
-                            {
-                                company = $"| Company: {task.CompanyName}";
-                            }
-
                             var dealName = GetDealNameFromActivity(globalUser.DataCenter, task.ActivityId);
-
-                            if (!string.IsNullOrWhiteSpace(dealName))
+                            listOverdue.Add(new Tuple<GridItem, DateTime>(new GridItem
                             {
-                                deal = $"| Deal: {dealName}";
-                            }
-
-                            var text = $"{task.DueDate.Value:ddd, dd-MMM-yy} - Task Past Due: {task.TaskName} {company} {deal}";
-
-                            listOverdue.Add(new Tuple<string, DateTime>(text, task.DueDate.Value));
+                                CellMobileDate = $"{task.DueDate.Value:dd-MMM-yy}",
+                                CellDay = $"{task.DueDate.Value:ddd}",
+                                CellDate = $"{task.DueDate.Value:dd-MMM-yy}",
+                                CellType = "Task Past Due",
+                                CellCompany = task.CompanyName,
+                                CellDetails = $"{dealName}{(string.IsNullOrEmpty(dealName) || string.IsNullOrEmpty(task.TaskName) ? "" : " | ") + task.TaskName}",
+                            }, task.DueDate.Value));
                         }
                     }
                 }
 
                 if (listUpcoming.Any() || listOverdue.Any())
                 {
-                    var stringBuilder = new StringBuilder("<html><body>");
+                    var path = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Templates\\WeeklyCRM\\email.html");
+                    var html = File.ReadAllText(path);
+                    var stringBuilderUpcoming = new StringBuilder();
+                    var stringBuilderOverdue = new StringBuilder();
 
+                    var count = 0;
+                    var styles1 = "font-size: 13px; padding: 5px 10px 5px 0px; text-overflow: ellipsis; overflow: hidden; vertical-align: top; line-height: normal;";
                     if (listUpcoming.Any())
                     {
-                        stringBuilder.Append("<b>UPCOMING THIS WEEK</b><hr>");
-
                         foreach (var text in listUpcoming.OrderBy(x => x.Item2))
                         {
-                            stringBuilder.Append($"{text.Item1}</br>");
+                            count ++;
+                            stringBuilderUpcoming.Append("<tr style=\"background-color:" + ((count % 2 == 0) ? "transparent" : "#f7f9fa") + ";\">" +
+                                "<td style=\"width: 34px;" + styles1 + $"padding-left: 10px;\">{text.Item1.CellDay}</td>" +
+                                "<td style=\"width: 70px;" + styles1 + $"\">{text.Item1.CellMobileDate}</td>" +
+                                "<td style=\"" + styles1 + $"\">{text.Item1.CellType}</td>" +
+                                "<td style=\"" + styles1 + $"\">{text.Item1.CellCompany}</td>" +
+                                "<td style=\"" + styles1 + $"\">{text.Item1.CellDetails}</td>" +
+                             "</tr>");
                         }
                     }
 
+                    count = 0;
                     if (listOverdue.Any())
                     {
-                        stringBuilder.Append("</br><b>PAST DUE</b><hr>");
-
                         foreach (var text in listOverdue.OrderBy(x => x.Item2))
                         {
-                            stringBuilder.Append($"{text.Item1}</br>");
+                            count++;
+                            stringBuilderOverdue.Append("<tr style=\"background-color:" + ((count % 2 == 0) ? "transparent" : "#f7f9fa") + ";\">" +
+                                "<td style=\"width: 34px;" + styles1 + $"padding-left: 10px;\">{text.Item1.CellDay}</td>" +
+                                "<td style=\"width: 70px;" + styles1 + $"\">{text.Item1.CellMobileDate}</td>" +
+                                "<td style=\"" + styles1 + $"\">{text.Item1.CellType}</td>" +
+                                "<td style=\"" + styles1 + $"\">{text.Item1.CellCompany}</td>" +
+                                "<td style=\"" + styles1 + $"\">{text.Item1.CellDetails}</td>" +
+                            "</tr>");
                         }
                     }
 
-                    stringBuilder.Append("</body></html>");
-
-                    SendEmail(stringBuilder.ToString(), globalUser.EmailAddress, globalUser.DataCenter);
+                    html = html.Replace("{dateFrom}", $"{dateFrom:ddd, dd-MMM-yy}");
+                    html = html.Replace("{dateTo}", $"{dateTo:ddd, dd-MMM-yy}");
+                    html = html.Replace("{upcomingTable}", stringBuilderUpcoming.ToString());
+                    html = html.Replace("{pastDueTable}", stringBuilderOverdue.ToString());
+                    html = html.Replace("{tableStyles1-upcoming}", listUpcoming.Any() ? "" : "display:none;");
+                    html = html.Replace("{tableStyles2-upcoming}", listUpcoming.Any() ? "" : "display:none;");
+                    html = html.Replace("{tablesVerticalSpacer}", listUpcoming.Any() && listOverdue.Any() ? "<br/><br/>" : "");
+                    html = html.Replace("{tableStyles1-pastDue}", listOverdue.Any() ? "" : "display:none;");
+                    html = html.Replace("{tableStyles2-pastDue}", listOverdue.Any() ? "" : "display:none;");
+                    
+                    //SendEmail(html, "dean.martin@firstfreight0.onmicrosoft.com", globalUser.DataCenter);
+                    //System.Diagnostics.Debug.WriteLine(html);
+                    SendEmail(html, globalUser.EmailAddress, globalUser.DataCenter);
                 }
             }
         }
@@ -382,10 +361,10 @@ namespace ffcrm.UserEmailService
             return new List<GlobalDeal>();
         }
 
-        private List<Activity> GetActivities(DateTime dateFrom, DateTime dateTo, int globalUserId, string dataCenter)
+        private List<Activity> GetEvents(DateTime dateFrom, DateTime dateTo, int globalUserId, string dataCenter)
         {
             var sharedContext = new DbSharedDataContext(Utils.GetSharedConnectionForDataCenter(dataCenter));
-            var activities = sharedContext.Activities.Where(x => x.UserIdGlobal == globalUserId && !x.Deleted && x.ActivityDate >= dateFrom && x.ActivityDate <= dateTo && x.TaskId == 0 && !x.ActivityType.ToLower().Equals("task"));
+            var activities = sharedContext.Activities.Where(x => x.UserIdGlobal == globalUserId && !x.Deleted && x.ActivityDate >= dateFrom && x.ActivityDate <= dateTo && (x.CalendarEventId >0 || x.ActivityType.ToLower().Equals("event")));
 
             if (activities != null && activities.Any())
             {
@@ -445,11 +424,11 @@ namespace ffcrm.UserEmailService
                 Subject = "FirstFreight Weekly Digest",
                 HtmlBody = html,
                 OtherRecipients = new List<Recipient> {
-                      //  new Recipient{  EmailAddress = toEmail  },
-                  //    new Recipient{  EmailAddress = "charles@firstfreight.com"  },
-                      new Recipient{  EmailAddress = "devseff01@gmail.com"  },
+                        new Recipient{
+                            EmailAddress = toEmail
+                        },
                         // send copy of email to archive + dev
-                     //  new Recipient{EmailAddress = "sendgrid@firstfreight.com" },
+                        new Recipient{EmailAddress = "sendgrid@firstfreight.com" },
                     }
             };
 
