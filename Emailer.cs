@@ -23,14 +23,16 @@ namespace ffcrm.UserEmailService
 
             //Date to is next Saturday at 23:59:59 (UTC).
             var dateTo = new DateTime(nextSaturday.Year, nextSaturday.Month, nextSaturday.Day, 23, 59, 59);
-          
+
             var sharedDb = new DbSharedDataContext(Utils.GetSharedConnection());
             var activeSubscriberIds = sharedDb.Subscribers.Where(t => !t.Deleted && t.Active && t.SubscriberId != 0 && t.SubscriberId != 100).Select(t => t.SubscriberId).ToList();
 
             var loginDb = new DbLoginDataContext(Utils.GetLoginConnection());
 
             //var globalUsers = loginDb.GlobalUsers.Where(x => t.LoginEnabled && !t.Deleted && x.EmailDigest.ToLower() == "weekly").OrderBy(x => x.FullName);
-            var globalUsers = loginDb.GlobalUsers.Where(t=> activeSubscriberIds.Contains(t.SubscriberId) && t.LoginEnabled && !t.Deleted).OrderBy(x => x.FullName).ToList();
+            var globalUsers = loginDb.GlobalUsers.Where(t => activeSubscriberIds.Contains(t.SubscriberId) && t.LoginEnabled && !t.Deleted).OrderBy(x => x.FullName).ToList();
+
+            var emailSentCount = 0;
 
             foreach (var globalUser in globalUsers)
             {
@@ -131,7 +133,7 @@ namespace ffcrm.UserEmailService
                             CellDate = $"{task.DueDate.Value:dd-MMM-yy}",
                             CellType = "Task Due",
                             CellCompany = task.CompanyName,
-                            CellDetails = $"{dealName}{(string.IsNullOrEmpty(dealName) || string.IsNullOrEmpty(task.TaskName) ? "" : " | " ) + task.TaskName}",
+                            CellDetails = $"{dealName}{(string.IsNullOrEmpty(dealName) || string.IsNullOrEmpty(task.TaskName) ? "" : " | ") + task.TaskName}",
                         }, task.DueDate.Value));
                     }
                 }
@@ -249,7 +251,7 @@ namespace ffcrm.UserEmailService
                     {
                         foreach (var text in listUpcoming.OrderBy(x => x.Item2))
                         {
-                            count ++;
+                            count++;
                             stringBuilderUpcoming.Append("<tr style=\"background-color:" + ((count % 2 == 0) ? "transparent" : "#f7f9fa") + ";\">" +
                                 "<td style=\"width: 34px;" + styles1 + $"padding-left: 10px;\">{text.Item1.CellDay}</td>" +
                                 "<td style=\"width: 70px;" + styles1 + $"\">{text.Item1.CellMobileDate}</td>" +
@@ -285,10 +287,15 @@ namespace ffcrm.UserEmailService
                     html = html.Replace("{tablesVerticalSpacer}", listUpcoming.Any() && listOverdue.Any() ? "<br/><br/>" : "");
                     html = html.Replace("{tableStyles1-pastDue}", listOverdue.Any() ? "" : "display:none;");
                     html = html.Replace("{tableStyles2-pastDue}", listOverdue.Any() ? "" : "display:none;");
-                    
+
                     //SendEmail(html, "dean.martin@firstfreight0.onmicrosoft.com", globalUser.DataCenter);
                     //System.Diagnostics.Debug.WriteLine(html);
                     SendEmail(html, globalUser.EmailAddress, globalUser.DataCenter);
+                    emailSentCount += 1;
+                    if (emailSentCount == 20)
+                    {
+                        break;
+                    }
                 }
             }
         }
@@ -364,7 +371,7 @@ namespace ffcrm.UserEmailService
         private List<Activity> GetEvents(DateTime dateFrom, DateTime dateTo, int globalUserId, string dataCenter)
         {
             var sharedContext = new DbSharedDataContext(Utils.GetSharedConnectionForDataCenter(dataCenter));
-            var activities = sharedContext.Activities.Where(x => x.UserIdGlobal == globalUserId && !x.Deleted && x.ActivityDate >= dateFrom && x.ActivityDate <= dateTo && (x.CalendarEventId >0 || x.ActivityType.ToLower().Equals("event")));
+            var activities = sharedContext.Activities.Where(x => x.UserIdGlobal == globalUserId && !x.Deleted && x.ActivityDate >= dateFrom && x.ActivityDate <= dateTo && (x.CalendarEventId > 0 || x.ActivityType.ToLower().Equals("event")));
 
             if (activities != null && activities.Any())
             {
@@ -428,7 +435,7 @@ namespace ffcrm.UserEmailService
                       new Recipient{  EmailAddress = "charles@firstfreight.com"  },
                       new Recipient{  EmailAddress = "devseff01@gmail.com"  },
                         // send copy of email to archive + dev
-                        new Recipient{EmailAddress = "sendgrid@firstfreight.com" },
+                        // new Recipient{EmailAddress = "sendgrid@firstfreight.com" },
                     }
             };
 
